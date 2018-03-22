@@ -1,23 +1,23 @@
 <!doctype html>
 <html>
-<head>
-	<meta charset="utf-8" />
-	<meta name="description" content="" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-	<title>{% block fulltitle %}{% block title %}{% endblock %} | {{ site.name }}{% endblock %}</title>
-	{% block extended_meta %}{% endblock %}
+	<head>
+		<meta charset="utf-8" />
+		<meta name="description" content="" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>{% block fulltitle %}{% block title %}{% endblock %} | {{ site.name }}{% endblock %}</title>
+		{% block extended_meta %}{% endblock %}
 
-	<link rel="shortcut icon" href="{{ STATIC_MEDIA_URL }}labj/v2/img/favicon.ico" />
-	<link href="{{ STATIC_MEDIA_URL }}labj/v2/css/app.css?v={% now "YmdHi" %}&amp;r=1" rel="stylesheet" />
-	<link href="https://fonts.googleapis.com/css?family=Cabin|Yrsa" rel="stylesheet">
-	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-	<link href="{{ STATIC_URL }}labj_dev/css/menu.css" rel="stylesheet" />
-	<link href="{{ STATIC_MEDIA_URL }}labj/v2/css/datajoe.css" rel="stylesheet" />
+		<link rel="shortcut icon" href="{{ STATIC_MEDIA_URL }}labj/v2/img/favicon.ico" />
+		<link href="{{ STATIC_MEDIA_URL }}labj/v2/css/app.css?v={% now "YmdHi" %}&amp;r=1" rel="stylesheet" />
+		<link href="https://fonts.googleapis.com/css?family=Cabin|Yrsa" rel="stylesheet">
+		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+		<link href="{{ STATIC_URL }}labj_dev/css/menu.css" rel="stylesheet" />
+		<link href="{{ STATIC_MEDIA_URL }}labj/v2/css/datajoe.css" rel="stylesheet" />
 
-	{% include "includes/v2/header.html" %}
-	{% block extended_scripts %}{% endblock %}
-	{% block feed_link %}{% endblock %}
-</head>
+		{% include "includes/v2/header.html" %}
+		{% block extended_scripts %}{% endblock %}
+		{% block feed_link %}{% endblock %}
+	</head>
 
 {% load polls sectionfronts fragments %}
 
