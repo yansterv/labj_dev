@@ -1,48 +1,26 @@
 {% load polls sectionfronts fragments %}
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
-
-   "http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
-
 <head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>{% block fulltitle %}{% block title %}{% endblock %} | {{ site.name }}{% endblock %}</title>
+	{% block extended_meta %}{% endblock %}
+	{% include "includes/styles.html" %}
 
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	{% block extended_styles %}
+	<style type="text/css">
+		.logo { top:37px; }
+	</style>
 
-  <title>{% block fulltitle %}{% block title %}{% endblock %} | {{ site.name }}{% endblock %}</title>
+	{% get_section_front for "newsletter-signup-overlay" as overlay_sfront %}
+	{% if overlay_sfront.newsletter_signup_overlay %}
+		<link rel="stylesheet" type="text/css" href="{{ STATIC_MEDIA_URL }}labj/stylesheets/jquery.fancybox.css" media="screen" />
+	{% endif %}
+	{% endblock %}
 
-  {% block extended_meta %}{% endblock %}
-
-
-
-  {% include "includes/styles.html" %}
-
-  {% block extended_styles %}
-
-    <style type="text/css">
-
-      .logo { top:37px; }
-
-    </style>
-
-
-
-    {% get_section_front for "newsletter-signup-overlay" as overlay_sfront %}
-
-    {% if overlay_sfront.newsletter_signup_overlay %}
-
-        <link rel="stylesheet" type="text/css" href="{{ STATIC_MEDIA_URL }}labj/stylesheets/jquery.fancybox.css" media="screen" />
-
-    {% endif %}
-
-  {% endblock %}
-
-  {% block skin_style %}{% endblock %}
-
-
-
-  {% include "includes/scripts.html" %}
+	{% block skin_style %}{% endblock %}
+		{% include "includes/scripts.html" %}
 
   {% block extended_scripts %}
 
