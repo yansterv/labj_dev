@@ -1,0 +1,25 @@
+{% extends "media/base_photos.html" %}
+{% block title %}Photos for {{ day|date }}{% endblock %}
+{% block body_class %}{{ block.super }} photo_archive_day{% endblock %}
+{% block content_title %}
+<h2>Photos for {{ day|date }}</h2>
+{{ block.super }}
+{% endblock %}
+{% block breadcrumbs %}
+<p>
+    <a href="../../../">Latest photos</a>
+    <a href="../../">{{ day|date:"Y" }}</a>
+    <a href="../">{{ day|date:"F" }}</a>
+    <span>{{ day|date:"j" }}</span>
+</p>
+{% endblock %}
+{% block content %}
+{% load content %}
+    <div class="column-group gutters">
+        {% for photo in object_list %}
+        <div class="all-33 medium-50 small-100 tiny-100">
+            {% render_template_for photo in "includes/lists" %}
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}

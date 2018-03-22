@@ -1,0 +1,98 @@
+{% extends "base_generic.html" %}
+{% block title %}Register for an account{% endblock %}
+{% block body_class %}{{ block.super }} registration_form{% endblock %}
+{% block extended_styles %}
+  {{ block.super }}
+  <style type="text/css">
+    #main {
+      background:none;
+    }
+    #content {
+      width:918px;
+    }
+    .dark-red {
+      color:#C00000;
+      font-weight:bold;
+    }
+    #reset-form p {
+      border-bottom:0;
+    }
+    #reset-results {
+      display:none;
+    }
+  form .submit button {
+    float: left;
+  }
+  #reset-results {
+    color:#ff0000;
+    font-weight:bold;
+  }
+  </style>
+{% endblock %}{% block extended_scripts %}
+  {{ block.super }}
+  <script type="text/javascript">
+    $(document).ready(function () {                     
+      var type = '{{ request.GET.type }}';
+      $("#reset-form").submit(function(event) {
+        event.preventDefault(); 
+          email = $('#id_email').val(),
+          url = $('#reset-form').attr('action');
+          $.post( url, { email: email },
+            function( data ) {
+              var content = $( data ).find( '#content .errorlist li:first-child' ).html();
+              if (content == "That e-mail address doesn't have an associated user account. Are you sure you've registered?" && type == 'new') {
+                message = "Sorry! That email address doesn’t have an associated user account. Please go to Step 2 to register for a new user account and complete your purchase.";
+              } else if (content == "That e-mail address doesn't have an associated user account. Are you sure you've registered?" && type == 'existing') {
+                message = "That e-mail address doesn't have an associated user account. Proceed to Step 2 - Register for a user account";
+              } else {
+               message = content;
+              }
+              $( "#reset-results" ).empty().append(message).css('display', 'block');
+            }
+          );
+        });
+      });
+  </script>
+{% endblock %}
+{% block content %}
+  {% with request.GET.type as type %}
+    <img src="{{ STATIC_MEDIA_URL }}ocbj/images/subscribe/bar-long2.png">
+    <br><br>
+    {% if type == 'new' %}
+      <h2>New Subscriber - User Registration</h2>
+      <div id="login">
+        <p class="dark-red">A print subscription to the Journal is required for full access to the Journal online. It's easy to get started.</p>
+        <img src="{{ STATIC_MEDIA_URL }}ocbj/images/subscribe/subscribe-features1.png">
+        <h3>Step 1. Tell us who you are.</h3>
+        <p>Enter your email address directly below. If we find a user account registered with that address then we'll email you a confirmation and login link.</p>
+    {% endif %}
+    {% if type == 'existing' %}
+    <h2>Current Subscriber User Registration</h2>
+        <div id="login">
+          <h3>Step 1. Check for existing user account</h3>
+        <p>Enter your email address directly below. If we find a user account registered with that address then we'll email you a confirmation and login link. If your email address is not found, then please proceed to Step 2: "Register for an Account" section.</p>
+    {% endif %}
+      <form action="/accounts/password/reset/" id="reset-form">
+        <p>
+          Email address: <input id="id_email" type="text" name="email" maxlength="75">
+        </p>
+        <p id="reset-results"></p>
+        <p class="submit"><button type="submit" name="submit">Submit</button></p>
+        </p>
+      </form>
+      <hr>      
+      <h3>Step 2. Register for a user account</h3>
+      <form action="" method="post" class="signup_form form_toggle">{% csrf_token %}
+        {% for field in form %}
+          <p><label for="id_{{ field.name }}">{{ field.label|title }}</label> {{ field }}
+            {% if field.name == "username" %}<span class="help_text">Alphanumeric characters, no spaces.</span>{% endif %}
+            {% if field.errors %}<span class="errors">{{ field.errors|join:", " }}</span>{% endif %}</p>
+        {% endfor %}
+        <p class="submit"><button type="submit">Sign up</button></p>
+      </form>
+    </div>
+  {% endwith %}
+{% endblock %}
+{% block sidebar_wrapper %}
+  {% block sidebar %}{% endblock %}
+{% endblock %}

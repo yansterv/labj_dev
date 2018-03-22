@@ -1,0 +1,97 @@
+{% extends "includes/v2/layout-two-col.html" %}{% load content listutil mailfriend mogrify sectionfronts paywallutils %}
+{% block title %}{{ story.headline }}{% endblock %}
+{% block body_class %}{{ block.super }} story_detail{% endblock %}
+{% block body_id %}story_{{ story.id }}{% endblock %}{% block extended_meta %}
+{% load metadata %}
+{% get_metadata for story as metadata %}
+{% if metadata.keywords %}<meta name="keywords" content="{{ metadata.keywords.content }}">{% endif %}
+<meta name="description" content="{% if metadata.description %}{{ metadata.description.content }}{% else %}{{ story.tease }}{% endif %}">
+{% endblock %}{% block content_title %}
+<h2>{{ section.title }}</h2>
+{% if section.blurb %}
+{% if not has_previous %}<p class="blurb">{{ section.blurb|safe }}</p>{% endif %}
+{% endif %}
+<!--<p class="feed"><a href="/rss/headlines/{{ section.url }}/">Subscribe</a></p>-->
+{% endblock %}{% block breadcrumb_content %}
+    <nav class="ink-navigation">
+        <ul class="breadcrumbs">
+            <li><a href="/">Home</a></li>
+            <li><a href="/news/">News</a></li>
+        </ul>
+    </nav>
+{% endblock breadcrumb_content %}{% block sidebar_modules %}
+    <div class="column-group modules">
+        {% load site_mlt %}
+        {% more_like_this story as recommended_list for "news.story" limit 8 %}
+        {% if recommended_list %}
+        <div class="module all-100 column-group">
+            <div class="column all-100 push-middle">
+                <div class="module-contents align-center">
+                    <h2 class="related title">You May Also Like</h2>
+                    <ul class="align-left">
+                        {% for story in recommended_list %}
+                        <li><a href="{{ story.object.get_absolute_url }}">{{ story.object.headline }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+{% endblock sidebar_modules %}
+{% block content %}
+<article class="post">
+    <header class="metadata">
+        {% if story.subhead %}<h4 class='subhead' style='margin-bottom: 5px'>{{ story.subhead|upper }}</h4>{% endif %}
+        <h1>{{ story.headline }}</h1>
+        <p class="author">{% if story.one_off_byline %}By {{ story.one_off_byline }}{% else %}{% if story.bylines.count %}By {% for author in story.bylines.all %}<a href="{{ author.get_absolute_url }}" class="name">{{ author }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}{% endif %}{% endif %}</p>
+        <p class="date">{% if not story.update_date %}{{ story.pub_date|date:"l, F j, Y" }}{% else %}Originally published {{ story.pub_date|date }} at {{ story.pub_date|time }}, updated {{ story.update_date|date }} at {{ story.update_date|time }}{% endif %}</p>
+    </header>
+    
+    <div class="share-container article-share-container">
+        <div class="fb">
+            <div class="fb-like" data-href="http://www.labusinessjournal.com{{ story.get_absolute_url }}" data-width="20" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
+        </div>
+        <div class="linked-twitter">    
+            <script src="//platform.linkedin.com/in.js" type="text/javascript"> lang: en_US</script>
+            <script type="IN/Share" data-url="http://www.labusinessjournal.com/{{ story.get_absolute_url }}"></script>
+            <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://www.labusinessjournal.com/{{ story.get_absolute_url }}">Tweet</a>
+            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+        </div>  
+    </div>    {% load banned comments content mailfriend mogrify paywallutils stories %}
+    {% if story|can_view:request.user %}    <!--article-->
+    <div class="article">
+        {% if story.lead_photo %}
+        {% with story.lead_photo.original as photo %}
+        <div class="story_lead_photo">
+            <div class="photo">
+                {% if photo.photo_type.slug == "illustrations" %}
+                <div class="post-image">
+                    <img class="" src="{% mogrify story.lead_photo.cropped.url thumbnail "670" %}" alt="{{ photo.caption }}" />
+                </div>
+                {% else %}
+                <a href="{{ photo.get_absolute_url }}"><img src="{% mogrify story.lead_photo.cropped.url thumbnail "670" %}" alt="{{ photo.caption }}"></a>
+                {% endif %}
+            </div>
+            <p class="caption">
+                {% if photo.caption %}{{ photo.caption }}{% endif %}
+                {% if photo.photographer or photo.one_off_photographer %}
+                {% if photo.photographer_id %}
+                Photo by <a href="{{ photo.photographer.get_absolute_url }}">{{ photo.photographer.first_name }} {{ photo.photographer.last_name }}</a>.
+                {% else %}
+                Photo by {{ photo.one_off_photographer }}
+                {% endif %}
+                {% endif %}
+            </p>
+        </div>
+        {% endwith %}
+        {% endif %}
+        {% markupstory story framing %}
+        <p>{{ story.post_story_blurb }}</p>
+        {% include "includes/pagination.html" %}
+    </div>
+{% else %}
+{% include "includes/paywall/subscribe_or_purchase.html" %}
+{% endif %}
+</article>
+{% endblock %}

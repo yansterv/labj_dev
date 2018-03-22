@@ -1,0 +1,36 @@
+{% extends "registration/registration_base.html" %}{% block title %}Account activation complete{% endblock %}
+{% block body_class %}{{ block.super }} registration_activation_complete{% endblock %}
+  {% block content %}
+    <img src="{{ STATIC_MEDIA_URL }}ocbj/images/subscribe/bar-long4.png">
+    <h1>Your user account is activated!</h1>
+    <h4>If you are a Subscriber to the {{ site.name }}:</h4>
+    <ol>
+      <li><a href="{{ login_url }}">Log in</a> below and proceed to the "Manage your User Account" profile page.</li>
+      <li>You may need to enter your Subscription Account number (for full access to {{ site.domain }}). Click on the "Create/Edit Your Subscription Account" link.</li>
+    </ol>    <h4>If you are not yet a{% if 'ocbj' in request.META.SERVER_NAME %}n{% endif %} {{ site.name }} Subscriber:</h4> 
+    <ol>
+      <li>Log in below and proceed to the "Manage your User Account" profile page.</li>
+      <li>Click on the "Subscribe Now" button.</li>
+    </ol>
+    {% if form.errors %}
+    <div class="message message_error">
+      <h4>Please correct the errors below</h4>
+      {% if form.non_field_errors %}<p>{{ form.non_field_errors }}</p>{% endif %}
+    </div>
+    {% endif %}
+    <hr>
+    <div id="login">
+      <form action="/accounts/login/" method="post" class="signin_form">
+        <p>
+          <label for="id_username">Username</label> <input id="id_username" type="text" name="username" maxlength="30" />
+        </p>
+        <p>
+          <label for="id_password">Password</label> <input type="password" name="password" id="id_password" />
+        </p>
+        <input type="hidden" name="next" value="/accounts/profile/">
+        <p>
+          <button type="submit" id="submit-button">Sign in</button>
+        </p>
+      </form>
+    </div>
+  {% endblock %}

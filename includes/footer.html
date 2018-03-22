@@ -1,0 +1,166 @@
+
+<footer class="footer all-100">
+    <div class="ink-grid">
+        <div class="column-group push-center footer-container">
+            <div class="module footer-col all-20 small-100 tiny-100">
+                <ul class="unstyled">
+                    <li class="list-title">Browse More</li>
+                    <div class="sub-items">
+                        <li><a href="#">Classified</a></li>
+                        <li><a href="#">The Lists Archives</a></li>
+                        <li><a href="#">Polls Archive</a></li>
+                        <li><a href="#">Buy Back Issues</a></li>
+                    </div>
+                </ul>
+            </div>
+            <div class="module footer-col all-20 small-100 tiny-100">
+                <ul class="unstyled">
+                    <li class="list-title">Learn More</li>
+                    <div class="sub-items">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="http://labusinessjournal.com/staff/">Staff</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Edit Profile</a></li>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="http://labusinessjournal.com/newsstands/">Newsstand Locations</a></li>
+                    </div>
+                </ul>
+            </div>
+            <div class="module footer-col all-20 small-100 tiny-100">
+                <ul class="unstyled">
+                    <li class="list-title">Services</li>
+                    <div class="sub-items">
+                        <li><a href="#">Subscription Center</a></li>
+                        <li><a href="#">Online Login/Register</a></li>
+                        <li><a href="https://account.labusinessjournal.com/labj/subinfo.aspx?pc=LA&do=R">Renewals</a></li>
+                        <li><a href="#">Advertise With Us</a></li>
+                        <li><a href="#">Sign-Up for E-News Updates</a></li>
+                        <li><a href="https://www.pubservice.com/subnew1.aspx?PC=LA&PK">LBSU Student</a></li>
+                    </div>
+                </ul>
+            </div>
+            <div class="module footer-col all-20 small-100 tiny-100">
+                <ul class="unstyled">
+                    <li class="list-title">Tools</li>
+                    <div class="sub-items">
+                        <li><a href="#">Calendar</a></li>
+                        <li><a href="#">Editorial Calendar</a></li>
+                    </div>
+                </ul>
+            </div>
+            <div class="module footer-col all-20 small-100 tiny-100">
+                <ul class="unstyled">
+                    <li class="list-title">Other Journals</li>
+                    <div class="sub-items">
+                        <li><a href="#">Orange County Business Journal</a></li>
+                        <li><a href="#">San Diego Business Journal</a></li>
+                        <li><a href="#">San Fernando Valley Business Journal</a></li>
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="footer-legal">
+        &copy; 2017 Los Angeles Business Journal • Phone 1-323-549-5225 • circulation@labusinessjournal.com
+    </div>
+</footer>
+
+<script src="{{ STATIC_MEDIA_URL }}labj/v2.1/js/app.min.js"></script>
+<!--<script type="text/javascript" src="http://cdn.ink.sapo.pt/3.1.10/js/modernizr.js"></script>
+<script type="text/javascript">
+    Modernizr.load({
+      test: Modernizr.flexbox,
+      nope : 'http://cdn.ink.sapo.pt/3.1.10/css/ink-legacy.min.css',
+    });
+</script>-->
+<script>
+    var breakr = 960;
+    var isSmall = false;
+
+    $(document).ready(function() {
+
+        function getActiveTab(element) {
+            element.addClass('active').siblings().removeClass('active')
+            var tab = element.data('tab');
+            var content = element.next('.tab-content');
+            var html = content.html();
+            var bucket = element.parent().siblings('.tab-content-bucket')
+            content.addClass('active');
+            bucket.html(html);
+        }
+        $('.tab').click(function() {
+            var element = $(this);
+            if (!element.hasClass('active')) {
+                getActiveTab(element);
+            }
+        });
+
+        $('.tab-module .tab').each(function() {
+            var element = $(this);
+            if (element.hasClass('active')) {
+                getActiveTab(element);
+            }
+        });
+
+        // desktop scripts
+        $('.top-search').click(function() {
+            $('.desktop-search').show();
+        });
+        $('.search-form .close-search').click(function() {
+            $('.desktop-search').hide();
+        });
+
+        function clickOutsideToClose(element) {
+            $(document).mouseup(function(e) {
+                var container = $(element);
+
+                if (!container.is(e.target) // if the target of the click isn't the container...
+                    &&
+                    container.has(e.target).length === 0) // ... nor a descendant of the container
+                {
+                    container.hide();
+                }
+            });
+        }
+
+        clickOutsideToClose('.desktop-search');
+
+        //mobile
+
+        $('.nav-toggle').click(function() {
+            $(this).toggleClass('open');
+            $('.mobile-menu').toggleClass('open');
+            $('body').toggleClass('mobile-menu-open')
+        });
+
+        $('.footer-col .list-title').click(function() {
+            $(this).closest('.footer-col').toggleClass('active');
+        });
+
+        // responsive
+        function resizeAdjustments() {
+            var ww = $(window).width();
+            if (ww < breakr && !isSmall) {
+                isSmall = true;
+                //$('.fp-sidebar').appendTo('.mobile-sidebar-container');
+            } else if (ww > breakr && isSmall) {
+                isSmall = false;
+                //$('.fp-sidebar').appendTo('.fp-wrap');
+            }
+        }
+
+        resizeAdjustments();
+
+        $(window).resize(function() {
+            resizeAdjustments();
+        }); // resize end
+
+    });
+</script>
+
+
+
+</body>
+
+</html>

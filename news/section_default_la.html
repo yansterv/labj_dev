@@ -1,0 +1,79 @@
+{% extends "news/base_news.html" %}{% load content listutil mailfriend mogrify sectionfronts paywallutils %}{% block title %}{{ section.title }}{% endblock %}
+{% block body_class %}{{ block.super }} section{% endblock %}
+{% block body_id %}section_{{ section.id }}{% endblock %}
+{% block feed_link %}<link type="application/rss+xml" rel="alternate" href="/rss/headlines/{{ section.url }}/">{% endblock %}
+{% block extended_meta %}{% with section as object %}{% include "includes/metadata.html" %}{% endwith %}{% endblock %}{% block content_title %}
+    <header class="meta">
+        <h1>{{ section.title|upper }}</h1>
+        {% if section.blurb %}
+            {% if not has_previous %}<p class="blurb">{{ section.blurb|safe }}</p>{% endif %}
+        {% endif %}
+    </header>
+{% endblock %}{% block breadcrumb_content %}
+<nav class="ink-navigation">
+    <ul class="breadcrumbs">
+        <li><a href="/">Home</a></li>
+        <li>{{ section.title }}</li>
+    </ul>
+</nav>
+{% endblock breadcrumb_content %}{% block content %}    <!-- FILE: section_default_la.html -->    {% get_section_front for section as sfront %}
+    {# Only show sfront if we are on the first page #}
+    {# of the section's list of stories. #}
+    {% if not has_previous %}
+    {% if sfront.lead_story %}
+    {% with sfront.lead_story as story %}
+        <div class="main-post article-list-item">
+            {% if story.lead_photo %}
+                <div class="thumbnail">
+                    <a href="{{ story.get_absolute_url }}{% if section.framing %}?{{ section.framing }}{% endif %}" class="thumbnail"><img src="{% mogrify story.lead_photo.cropped.url resize "300x240" %}" alt="{{ story.lead_photo.caption }}" class="alignleft"></a>
+                </div>
+            {% endif %}
+            <div class="info">
+                <h3><a href="{{ story.get_absolute_url }}{% if section.framing %}?{{ section.framing }}{% endif %}">{{ story.headline }}</a></h3>
+                {% if story.subhead %}<span class="info-post">{{ story.subhead }}</span{% endif %}
+                                      {% if story.tease %}<p>{{ story.tease|striptags }}</p>{% endif %}
+                <ul class="footer">
+                    <li><a href="{% mailfriend_link for story %}" rel="popup(600x650)">Share</a></li>
+                    <li>
+                        {% if story.one_off_byline %}
+                            By <span class="name">{{ story.one_off_byline }}</span>
+                        {% else %}
+                            {% if story.bylines.all %}By
+                                {% for staffmember in story.bylines.all %}
+                                    <a href="{{ staffmember.get_absolute_url }}" class="name">{{ staffmember.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        {% endif %}
+                    </li>
+                    <li><span class="published">{{ story.pub_date|date }} {{ story.pub_date|time }}</span></li>
+                    {% if story|behind_paywall %}<li><em>$$</em></li>{% endif %}
+                </ul>
+            </div>
+        </div>
+{% endwith %}
+    {% endif %}    {% if sfront.featured_stories %}
+    <h5>Lead stories</h5>
+    <div class="list lead_list">
+        {% for story in sfront.featured_stories %}
+        {% render_template_for story in "includes/lists" %}
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endif %}    {% if story_list %}
+    {# If we have a lead story and/or featured stories, we don't #}
+    {# want them showing up in the story list as well. #}
+    {% exclude_from_list story_list sfront.lead_story,sfront.featured_stories as story_list %}
+    <div class="list story_list">
+        {% if sfront.featured_stories %}<h5>More {{ section.title }}</h5>{% endif %}
+        {% for story in story_list %}
+        {% render_template_for story in "includes/lists" %}
+        {% endfor %}
+    </div>
+    {% endif %}    {% if has_next or has_previous %}
+        {% load pagination %}
+        <p class="pagination">
+            {% if has_previous %}<a class="previous" href="{{ section.get_absolute_url }}?page={{ previous_page_num }}">Prev</a>{% else %}<span class="previous">Prev</span>{% endif %}
+            {% if has_next %}<a class="next" href="{{ section.get_absolute_url }}?page={{ next_page_num }}">Next</a>{% else %}<span class="next">Next</span>{% endif %}
+        </p>
+    {% endif %}
+{% endblock %}

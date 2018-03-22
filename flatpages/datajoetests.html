@@ -1,0 +1,82 @@
+{% extends "includes/v2/layout-two-col.html" %}
+{% load datajoe_tags %}
+{% block extended_scripts %}
+<style>
+#projects {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}#projects td, #projects th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    cursor: pointer;
+}#projects tr:nth-child(even){background-color: #f2f2f2;}#projects tr:hover {background-color: #ddd;}#projects th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #004b85;
+    color: white;
+}
+</style>
+{% endblock %}{% block title %}{{ flatpage.title }}{% endblock %}
+{% block body_class %}flatpage_default{% endblock %}
+{% block body_id %}flatpage_{{ flatpage.id }}{% endblock %}
+{% block feed_link %}
+  {% load content %}
+  <link type="application/rss+xml" rel="alternate" href="/rss/comments/objects/{{ flatpage|content_type_id }}/{{ flatpage.pk }}/" data-hello="1">
+{% endblock %}
+{% block content_title %}{% endblock %}{% block content %}
+{% load markup banned comments %}
+{{ flatpage.content|markdown }}
+<table id="projects">  <tr>
+    <th onclick="sortTable(1)">List</th>
+  </tr>
+  
+    {% get_datajoe_projects 1 as projects1 %}
+    {% for project1 in projects1.data %}
+      {% if project1.projectYear == now.year %}
+        <tr>
+          <td><a href="/datajoe/detail?id=35425">{{ project1.projectName }}</a></td>
+        </tr>
+      {% endif %}
+    {% endfor %}
+</table>
+    <a href="?page={{ projects1.pagination_info.prev }}">Prev</a> - - 
+    <a href="?page={{ projects1.pagination_info.next }}">Next</a><script>
+function sortTable(n) {
+  var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+  table = document.getElementById("projects");
+  switching = true;
+  dir = "asc"; 
+  while (switching) {
+    switching = false;
+    rows = table.getElementsByTagName("tr");
+    for (i = 1; i < (rows.length - 1); i++) {
+      shouldSwitch = false;
+      x = rows[i].getElementsByTagName("td")[n];
+      y = rows[i + 1].getElementsByTagName("td")[n];
+      if (dir == "asc") {
+        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+          shouldSwitch= true;
+          break;
+        }
+      } else if (dir == "desc") {
+        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+          shouldSwitch= true;
+          break;
+        }
+      }
+    }
+    if (shouldSwitch) {
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+      switchcount ++; 
+    } else {
+      if (switchcount == 0 && dir == "asc") {
+        dir = "desc";
+        switching = true;
+      }
+    }
+  }
+}
+</script>{% endblock %}

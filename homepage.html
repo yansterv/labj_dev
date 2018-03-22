@@ -1,0 +1,276 @@
+{% extends "base.html" %}
+
+{% block body_class %}{{ block.super }} home{% endblock %}
+
+{% block title %}Los Angeles Business Journal Homepage{% endblock %}
+
+{% block content %}
+
+    {% load mogrify content sectionfronts sections looputil listutil fragments paywallutils %}
+
+    {% get_section_front for "home" as home %}
+
+    {% comment %} 
+
+        {% include "includes/v2/ad-skyscraper1.html" %}
+
+        {% include "includes/v2/ad-skyscraper2.html" %}
+
+    {% endcomment %}
+
+	<p style="color: red; border: 1px solid powderblue;">static url: {{STATIC_URL}}</p>
+
+    <div class="fp-wrap column-group">
+        <div class="fp-main">
+            <div class="main-column-group">
+                <div class="fp-digital-reader" id="hp-col-1">
+                    <div class="fp-digital-reader-content ink-flex">
+                        <div class="fp-digital-reader-thumb order-1 tiny-order-2 small-order-2">
+							
+                            {% fragment la_digital_edition_link as link %}
+
+                            {% if user.is_authenticated %}<a href="{{ link.content }}" target="_blank">{% else %}<a href="/accounts/login/">{% endif %}
+
+                                <img src="{{ home.digital_edition.thumbnail.url }}" alt="{{ home.digital_edition.description }}">
+                                <div class="read-now-btn">Read Now</div>
+                            </a>
+                        </div>
+                        <div class="fp-digital-reader-lockup order-2 tiny-order-1 small-order-1">
+                            <h2>This Week&rsquo;s Issue</h2>
+                            <div>Digital Reader</div>
+                        </div>
+                    </div>
+                    <div class="ad">
+                         <div class="module half-bottom-space">
+                            <div class="module-content imageholder">
+                                <figure>
+                                    {% include "includes/v2/ad-middle.html" %}
+                                </figure>
+                            </div>
+                        </div>
+                         <div class="module half-bottom-space">
+                            <div class="module-content imageholder">
+                                <figure>
+                                    {% include "includes/v2/ad-middle1.html" %}
+                                </figure>
+                            </div>
+                        </div>
+						<hr >
+          <div class="module half-bottom-space">
+              <div class="ad-holder">
+                <SCRIPT LANGUAGE=JavaScript>
+                    OAS_AD('x101');
+                </SCRIPT>
+              </div>
+          </div>
+                    </div>
+                </div><!-- fp-digital-reader -->
+                <div class="fp-latest-local" id="hp-col-2">
+                    <div class="fp-ll-header">
+                        <h3><span class="icon fa fa-map-marker"></span>Latest Local News</h3>
+                    </div>
+                    <div class="fp-ll-articles">
+
+                        {% for story in home.daily_stories %}
+
+                            {% if forloop.counter <= 4 %}
+
+                                <div class="fp-ll-article">
+
+                                    {% if story.lead_photo %}
+
+                                        {% with story.lead_photo.original as photo %}
+
+                                            <div class="thumb">
+                                                <a href="{{ story.get_absolute_url }}"><img src="{% mogrify story.lead_photo.cropped.url thumbnail "286" %}" alt="{{ photo.caption }}"></a>
+                                            </div>
+
+                                        {% endwith %}
+
+                                    {% endif %}
+
+                                    <a href="{{ story.get_absolute_url }}"><h2>{{ story.headline }}</h2></a>
+
+                                    <div class="excerpt"><a href="{{ story.get_absolute_url }}">{{story.tease}}</a></div>
+
+                                    <div class="author">{% if story.one_off_byline %}By {{ story.one_off_byline }}{% else %}{% if story.bylines.count %}By {% for author in story.bylines.all %}<a href="{{ author.get_absolute_url }}" class="name">{{ author }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}{% endif %}{% endif %}</div>
+                                </div>
+
+                            {% endif %}
+
+                        {% endfor %}
+
+                    </div>
+                    <div class="mobile-sidebar-container"></div>
+                </div><!-- fp-latest-local -->
+            </div>
+        </div><!-- fp-main -->
+        <div class="fp-sidebar push-right" id="hp-col-3">
+            <div class="fp-sidebar-content">
+          <div class="hide-all show-medium show-small show-tiny module half-bottom-space">
+              <div class="ad-holder" style="margin-top:30px;">
+                <SCRIPT LANGUAGE=JavaScript>
+                    OAS_AD('x101');
+                </SCRIPT>
+              </div>
+          </div>
+                <div class="fp-sb-share">
+                    {% include "includes/v2/module-share.html" %}
+                </div>
+                <div class="fp-sb-articles">
+                    {% for story in home.daily_stories %}
+
+                        {% if forloop.counter > 4 and forloop.counter <= 9 %}
+
+                            <div class="fb-sb-article">
+                                <a href="{{ story.get_absolute_url }}"><h3>{{ story.headline }}</h3></a>
+                            </div>
+
+                        {% endif %}
+
+                    {% endfor %}
+                </div>
+                <div class="fp-sb-ads">
+                    <div class="module half-bottom-space">
+                        <div class="module-content imageholder">
+                            <figure>
+                                {% include "includes/v2/ad-position1.html" %}
+                            </figure>
+                        </div>
+                    </div>
+                </div>  <!-- fp-sb-ads -->
+                <div class="fp-sb-links">
+                    <div class="link"><a href="/news/la-daily-local/">More Latest Local News</a></div>
+                    <div class="link"><a href="/news/la-daily-curated/">News from Around the Web</a></div>
+                    <div class="link"><a href="/news/weekly-edition/">Read Weekly Edition news stories</a></div>
+               </div>
+                    <div class="fp-sb-ads"> 
+					  {% fragment la_homepage_potm as potm %}
+
+                        {{ potm.content|safe }}
+					</div>
+                     <hr>                
+
+                {% block poll %}
+
+                {% get_section_front for "home" as home %}
+
+                {% if home.poll.0 %}
+
+                <div class="fp-sb-poll">
+                    <div class="fb-sb-poll-header">
+                        <h2>Reader Poll</h2>
+                        <div class="poll-desc">
+                            {{ home.poll.0.question }}
+                        </div>
+                        <form action="{{ home.poll.0.get_absolute_url }}results/" class="poll" method="post">
+                            <div class="poll-options">
+                                {% for choice in home.poll.0.choices.all %}
+                                <div class="poll-option">
+                                    <input type="radio" id="{{ choice.id }}" name="choice" value="{{ choice.id }}" class="radio" />
+                                    <label for="{{ choice.id }}">{{ choice.choice }}</label>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            <input type="submit" class="btn" value="cast vote" />
+                        </form>
+                    </div>
+                </div><!-- fp-sb-poll -->
+
+                {% endif %}
+
+                {% endblock poll %}
+
+                {% include "includes/v2/module-podcast.html" %}
+
+            </div>
+
+						<!-- 
+						<hr >
+          <div class="module half-bottom-space">
+              <div class="ad-holder">
+                <SCRIPT LANGUAGE=JavaScript>
+                    OAS_AD('x102');
+                </SCRIPT>
+              </div>
+          </div>
+						-->
+        </div><!-- fp-sidebar -->
+
+            <div class="fp-events-lists-special-sup">
+                <div class="fp-events">
+                    <div class="fp-events-header">
+                        <h2><span class="icon fa fa-calendar"></span>Events</h2>
+                    </div>
+                    <div class="fp-events-list">
+
+                        {% fragment la_homepage_events as events %}
+
+                        {{ events.content|safe }}
+                    </div>
+                </div><!-- fp-events -->
+                <div class="fp-lists">
+                    <div class="fp-lists-header">
+                        <h2><span class="icon fa fa-list"></span>Lists</h2>
+                    </div>
+                    <div class="list">
+                        {% fragment la_homepage_lists as lists %}
+
+                        {{ lists.content|safe }}
+					<!--
+                        <div class="key-value column-group">
+                            <div class="key all-20 medium-100 small-100 tiny-100">Current:</div>
+                            <div class="value all-80 medium-100 small-100 tiny-100">Largest Private Companies</div>
+                        </div>
+                        <div class="key-value column-group">
+                            <div class="key all-20 medium-100 small-100 tiny-100">Recent:</div>
+                            <div class="value all-80 medium-100 small-100 tiny-100">Shipping Lines, Temporary Placement Firms, Private Education Companies, Chamber of Commerce, Commercial Real Estate Brokerage Firms, Charitable Foundations / Trusts, Colleges and Universities, M.B.A. Programs, Community Colleges, Construction Projects, Infrastructure Construction Projects, Employee Benefits Consultants</div>
+                        </div>-->
+                    </div>
+                </div><!-- fp-lists -->
+                <div class="fp-special-sub">
+                    <div class="special-sub-selector">
+                        <div class="tab-module">
+                            <div class="tabs column-group">
+                                <a class="tab all-33 medium-100 small-100 tiny-100 active" data-tab="special-reports">Special Reports</a>
+                                <div class="tab-content active" data-tab="special-reports">
+                                    <div class="text">
+                                        <div class="html-fragment-special-report">
+                                            {% fragment la_homepage_special-report as report %}
+
+                                            {{ report.content|safe }}
+                                        </div>
+                                    </div>
+                                 </div>
+                                <a class="tab all-33 medium-100 small-100 tiny-100" data-tab="supplements">Custom Content</a>
+                                <div class="tab-content" data-tab="supplements">
+                                    <div class="html-fragment-supplements">
+                                        {% fragment la_homepage_supplements as supplements %}
+
+                                        {{ supplements.content|safe }}
+                                    </div>
+                                </div>
+                                <a class="tab all-33 medium-100 small-100 tiny-100" data-tab="people-on-the-move">People On The Move</a>
+                                <div class="tab-content" data-tab="people-on-the-move">
+                                    <div class="html-fragment-people-on-the-move">
+                                        {% fragment la_homepage_peoplemove as peoplemove %}
+
+                                        {{ peoplemove.content|safe }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-content-bucket">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+								<!-- fp-special-sub -->
+            </div>
+						<!-- fp-events-lists-special-sub -->
+    </div> 
+
+{% include "includes/overlay_ad_fix.html" %}
+
+			{% comment %}  {% endcomment %}	
+
+{% endblock content %}

@@ -1,0 +1,40 @@
+{% extends "includes/lists/default.html" %}
+
+{% block body_class %}news{% endblock %}
+
+{% block item %}
+{% load cached_comments content mogrify mailfriend permissions %}
+<div class="article-list-item">
+    <div class="info small-order-2 tiny-order-2">
+        <h4><a href="{{ object.get_absolute_url }}{% if section and section.framing %}?{{ section.framing }}{% endif %}">{{ object.headline|striptags }}</a></h4>
+        {% if object.subhead %}
+        <h5>{{ object.subhead }}</h5>
+        {% endif %}
+        {% if object.tease %}
+        <p>{{ object.tease|striptags }}</p>
+        {% endif %}
+
+        <ul class="footer">
+            <li><a href="{% mailfriend_link for object %}" rel="popup(600x650)">Share</a></li>
+            {% if object.comments_allowed %}
+            {% get_cached_comment_count for object as comment_count %}
+            {% if object.comments_on %}<li><a href="{{ object.get_absolute_url }}{% if section and section.framing %}?{{ section.framing }}{% endif %}#comments">{% if comment_count %}{{ comment_count }} comment{{ comment_count|pluralize }}{% else %}Discuss{% endif %}</a></li>{% endif %}
+            {% endif %}
+            <li>{% if object.one_off_byline %}By {{ object.one_off_byline }}{% else %}{% if object.bylines.count %}By {% for author in object.bylines.all %}<a href="{{ author.get_absolute_url }}">{{ author }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}{% endif %}{% endif %}</li>
+            <li>{{ object.pub_date|date }}</li>
+            {% if user|can_change:object %}
+            <li><a href="/admin/news/story/{{ object.pk }}/" class="admin_link">edit</a></li>
+            {% endif %}
+        </ul>
+    </div>
+    <div class="thumbnail small-order-1 tiny-order-1">
+        {% if object.tease_photo %}
+        <a href="{{ object.get_absolute_url }}"><img src="{% mogrify object.tease_photo.url resize "300x300" %}" title="" alt="Tease photo"></a>
+        {% else %}
+        {% if object.lead_photo %}
+        <a href="{{ object.get_absolute_url }}"><img src="{% mogrify object.lead_photo.cropped.url resize "300x300" %}" title="" alt="Tease photo"></a>
+        {% endif %}
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+ <html>
+  <head>
+    <style type="text/css" media="screen">
+      #splash-container p {
+        text-align: center;
+        width: 100%;
+      }
+      #close {
+        color: #000;
+        font-family: Arial, Helvetica, sans-serif;
+        padding: 10px;
+        text-decoration: none;
+      }
+      #close:hover {
+        text-decoration: underline;
+      }
+      #splash {
+        margin: 0;
+      }
+      #splash-popup {
+        height: 200px;
+        width: 541px;
+      }
+      #splash-top {
+        background-image: url(http://ocbj.media.clients.ellingtoncms.com/static/labj/images/overlay/popup-top.png);
+        height: 54px;
+        background-repeat: no-repeat;
+        text-indent: -999em;
+      }
+      #splash-bottom {
+        background-image: url(http://ocbj.media.clients.ellingtoncms.com/static/labj/images/overlay/popup-bottom.png);
+        height: 84px;
+        background-repeat: no-repeat;
+      }
+      #splash-body {
+        padding: 0 10px;
+        background-image: url(http://ocbj.media.clients.ellingtoncms.com/static/labj/images/overlay/popup-body.png);
+        background-repeat: repeat-y;
+        font-family: Arial, Helvetica, sans-serif;
+        text-align: center;
+      }
+      #splash-bottom form {
+        margin: 0px;
+        padding: 0px;
+        position: relative;
+      }
+      #splash-content {
+        padding: 10px 0px;
+        background-image: url(http://ocbj.media.clients.ellingtoncms.com/static/labj/images/overlay/popup-texture.png);
+      }
+      #splash-content p, #splash-content h3 {
+        margin: 0px;
+        padding: 0px;
+      }      #splash-content h3 {
+        font-size: 20px;
+        margin-bottom: 2px;
+      }
+      #splash-content p {
+        font-size: 15px;
+        line-height: 21px;
+      }
+      #popup-form {
+        padding: 12px 20px 12px 20px;
+      }
+      #input-wrap input#popup-email {
+        color: #bbbbbb;
+        font-size: 18px;
+        line-height: 18px;
+        background-color: transparent;
+        border: none;
+        padding: 0px;
+        width: 320px;
+/*        position: absolute;
+        top: 12px;
+        left: 14px;
+*/        height: 40px;
+        font-family: Arial, Helvetica, sans-serif;
+        background-repeat: no-repeat;
+        display: block;
+      }
+      #input-wrap {
+        color: #bbbbbb;
+        font-size: 18px;
+        line-height: 18px;
+        background-image: url(http://ocbj.media.clients.ellingtoncms.com/static/labj/images/overlay/field-bkg.png);
+        background-color: transparent;
+        border: none;
+        padding-left: 10px;
+        height: 46px;
+        width: 338px;
+        position: absolute;
+        top: 12px;
+        left: 20px;
+        font-family: Arial, Helvetica, sans-serif;
+        background-repeat: no-repeat;
+      }
+      #popup-form input#popup-submit {
+        background-color: transparent;
+        background-image: url(http://ocbj.media.clients.ellingtoncms.com/static/labj/images/overlay/submit-bkg.png);
+        border: none;
+        color: #ffffff;
+        height: 46px;
+        left: 362px;
+        position: absolute;
+        text-indent: -9999px;
+        top: 12px;
+        width: 158px;
+      }
+    </style>
+  </head>
+  <body id="splash">
+    <div id="splash-container">
+      <script type="text/javascript" charset="utf-8">
+        function swap_email() {
+          if (document.getElementById('popup-email').value == 'Enter your email') {
+            document.getElementById('popup-email').value = '';
+            document.getElementById('popup-email').style.color = '#000000';
+          }
+        }
+      </script>
+      <div id="splash-popup">
+        <div id="splash-top">FREE eNews Reports</div>
+        <div id="splash-body">
+          <div id="splash-content">
+            <h3>Get the news as it happens.</h2>
+            <p>
+              Enter your email address to get the latest updates from LA Business Journal. Already have an account? Sign-up to add more eNews alerts.
+            </p>
+          </div>
+        </div>
+        <div id="splash-bottom">
+          <form target="_top" action="http://www.magnetmail.net/actions/subscription_form_action_labjpopup.cfm" id="popup-form" method="post" accept-charset="utf-8">
+            <input type="hidden" name="user_id" value="LABJ" maxlength="10">
+            <input type="hidden" name="subId" value="1228" maxlength="10">
+            <input type="hidden" name="custom10" maxlength="100" value="y">
+            <input type="hidden" name="SubGroups" value="939384">
+            <input type="hidden" name="SubGroups" value="939385">
+            <input type="hidden" name="SubGroups" value="939388">
+            <input type="hidden" name="SubGroups" value="939389">
+            <input type="hidden" name="custom_validation_redir" value="http://www.labusinessjournal.com/newsletter-signup-overlay">
+            <div id="input-wrap">
+              <input type="text" name="recipient_email" maxlength="100" id="popup-email" value="Enter your email" onclick="swap_email()"></input>
+            </div>
+            <input type="submit" id="popup-submit" value="" name="set">
+          </form>
+        </div>
+      </div>
+      <p><a id="close" href="javascript:parent.$.fancybox.close();">No Thanks</a></p>
+    </div>
+  </body>
+</html>

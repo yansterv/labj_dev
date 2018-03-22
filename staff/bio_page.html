@@ -1,0 +1,76 @@
+{% extends "includes/v2/layout-two-col.html" %}{% block title %}{{ staffmember.get_full_name }} | Staff{% endblock %}
+{% block body_class %}{{ block.super }} section bio-page{% endblock %}
+{% block body_id %}staff_{{ staffmember.id }}{% endblock %}
+{% block feed_link %}<link type="application/rss+xml" rel="alternate" href="/rss/headlines/{{ section.url }}/">{% endblock %}
+{% block extended_meta %}{% with section as object %}{% include "includes/metadata.html" %}{% endwith %}{% endblock %}{% block breadcrumb_content %}
+<nav class="ink-navigation">
+  <ul class="breadcrumbs">
+    <li><a href="/">Home</a></li>
+    <li><a href="/staff/">Staff</a></li>
+  </ul>
+</nav>
+{% endblock breadcrumb_content %}  {% block content %}
+    {% load mogrify content social cached_comments mailfriend %}    {% get_favorite_type for staffmember as favorite_type %}    <h1>{{ staffmember.get_full_name }}</h1>
+    <h2 class="position-title">{{ staffmember.get_current_position.position }}</h2>
+    <div class="section_wrapper">
+      {% if staffmember.mugshot and staffmember.show_mug %}
+        <div class="section"><p><img class="mugshot" src="{% mogrify staffmember.mugshot.url thumbnail "210" %}" alt=""></p></div>
+      {% endif %}
+      <div class="section section_wide section_end">
+        <div class="bio">
+          {{ staffmember.bio|striptags|linebreaks }}
+        </div>
+        <div class="contact-info">
+        {% if staffmember.email %}Email: <a href="mailto:{{ staffmember.email }}"> {{ staffmember.email }} </a>{% endif %}
+        {% if staffmember.phone %}<br />Phone: {{ staffmember.phone }}
+          {% if staffmember.phone_extension %}
+          Extension: {{ staffmember.phone_extension }}
+          {% endif %}
+        {% endif %}
+        </div>        <!--
+          <ul>
+            <li><a href="{{ staffmember.get_absolute_url }}stories/">Show all stories</a></li>
+            {% if staffmember.email %}<li><a href="{{ staffmember.get_absolute_url }}contact/">Contact</a></li>{% endif %}
+            <li><a href="/rss/authors/{{ staffmember.slug }}/">Subscribe to stories</a></li>
+            <li><a href="/searchalerts/create/?query={{ staffmember.first_name }}%20{{ staffmember.last_name }}">Set up a search alert</a></li>
+          </ul>
+        -->
+        <!--
+        {% if favorite_type %}
+        <div class="favorite-controls list-item-controls">
+          {% if_favorited staffmember user %}
+          <a href="/social/favorites/{{ favorite_type.slug }}/delete/{{ staffmember.id }}/">Favorited</a>
+          {% else %}
+          <a href="/social/favorites/{{ favorite_type.slug }}/add/{{ staffmember.id }}/">{{ favorite_type.name }}</a>
+          {% endif_favorited %}
+          &nbsp;&nbsp;|&nbsp;&nbsp;<a href="/social/favorites/{{ favorite_type.slug }}/">Your favorite staff members</a>
+        </div>
+        {% endif %}
+        -->
+        <!--
+        <li class="share">
+          <a href="#">Share this</a>
+          <small>
+            <a href="{% mailfriend_link for staffmember %}" rel="popup(620x650)">Email</a>,
+            <a href="http://www.facebook.com/sharer.php?u=http://{{ site.domain }}{{ staffmember.get_absolute_url }}" rel="popup(800x400)">Facebook</a>,
+            <a href="http://twitter.com/home?status=http://{{ site.domain }}{{ staffmember.get_absolute_url }}">Twitter</a>
+          </small>
+        </li>-->
+        <ul class="social-networks">
+          {% for profile in staffmember.social_network_profiles.all %}
+            <li><a href="{{ profile.url }}"><img src="{{ profile.icon }}" /> {{ profile }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  {% if story_list %}
+  <h2>Recent Stories</h2>
+  {% if story_list %}
+  <div class="list story_list">
+    {% for story in story_list %}
+    {% render_template_for story in "includes/lists" %}
+    {% endfor %}
+  </div>
+  {% endif %}
+  <p><a class="button" href="./stories/">More stories &gt;&gt;</a></p>
+  {% endif %}  {% endblock %}

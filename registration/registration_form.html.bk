@@ -1,0 +1,114 @@
+{% extends "registration/registration_base.html" %}
+
+{% block title %}Register for an account{% endblock %}
+{% block body_class %}{{ block.super }} registration_form{% endblock %}
+
+
+{% block extended_styles %}
+  {{ block.super }}
+  <style type="text/css">
+    #main {
+      background:none;
+    }
+    #content {
+      width:918px;
+    }
+    .dark-red {
+      color:#C00000;
+      font-weight:bold;
+    }
+    #reset-form p {
+      border-bottom:0;
+    }
+    #reset-results {
+      display:none;
+    }
+  .submit {
+    float: right;
+  }
+  #reset-results {
+    color:#ff0000;
+    font-weight:bold;
+  }
+  #register_form_container {
+    width: 40%;
+    margin: 0 auto;
+  }
+  #register_form_container p {
+    text-align: justify;
+  }
+  #register_form_container fieldset{
+    border: 1px solid;
+    padding: 20px;
+  }
+  #register_form_container legend{
+	  padding-left: 10px;
+	  padding-right: 10px;
+  }
+  #register_form_container .errors{
+  padding: 0; 
+  background:  none;
+  border: none;
+  font-size: 12px;
+  font-weight: bold;
+  color: #555;
+  }
+#circle {
+    width: 20px;
+    height: 20px;
+    border: 2px solid;
+    border-radius: 50%;
+    display: inline-block;
+}
+#line{
+    border-top: 2px solid;
+    width: 100px;
+    height: 9px;
+    display: inline-block;
+}
+#registration_steps {
+    text-align:center;
+    font-size: 13px;
+}
+
+.step-completed{
+ background: #00416f;
+}
+
+  </style>
+{% endblock %}
+
+{% block extended_scripts %}
+  {{ block.super }}
+  </script>
+{% endblock %}
+{% block content %}
+<div id="register_form_container">
+<div id="registration_steps">
+        <div>Create Account &gt; Subscription Info &gt;  Complete </div>
+	<span class="step-completed" id="circle"></span>
+	<span id="line"></span>
+	<span id="circle"></span>
+	<span id="line"></span>
+	<span id="circle"></span>
+</div>
+	<!--<img src="{{ STATIC_MEDIA_URL }}ocbj/images/subscribe/bar-long2-s.png">-->
+	<p>Please fill out the form below to create an account and gain access to our digital editions as well as the online editions</p>
+	<form action="" method="post" class="signup_form form_toggle">{% csrf_token %}
+		<fieldset>
+			<legend> Craete Account </legend>
+			<table>
+				{% for field in form %}
+				<tr><td> {{ field.label_tag }} </td><td> {{ field }} {% if field.errors %}<div class="errors">{{ field.errors|join:", " }}</div>{% endif %}</td></tr>
+				{% endfor %}
+				<tr><td>  </td><td><button class="submit" type="submit">Sign up</button></td></tr>
+
+			</table>	
+		</fieldset>
+	</form>
+</div>
+{% endblock %}
+
+{% block sidebar_wrapper %}
+  {% block sidebar %}{% endblock %}
+{% endblock %}

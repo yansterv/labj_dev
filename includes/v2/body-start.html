@@ -1,0 +1,48 @@
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script><header>
+    <div class="mobile-header hide-all show-medium show-small show-tiny">
+        <div class="mobile-branding">
+            <div class="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <a href="/"><img src="{{ STATIC_MEDIA_URL }}labj/v2/img/logo-mobile.png" class="logo" /></a>
+        </div>
+        {% include "includes/v2/mobile-menu.html" %}
+    </div>
+    <nav class="ink-navigation all-100 hide-medium hide-small hide-tiny" data-offset-top="0" data-activate-in-layouts="all">
+        <ul class="menu top-nav horizontal black all-100 hide-small hide-tiny">
+            {% include "includes/v2/publication-nav.html" %}
+            <!-- <li class="sep"><span>|</span></li> -->
+            <div class="top-options push-right">
+                {% include "includes/v2/top-nav-main-items.html" %}
+                <!-- <li class="sep"><span>|</span></li>-->
+                {% include "includes/v2/login-search.html" %}
+            </div>
+        </ul>
+        <div class="desktop-search">
+            {% include "includes/v2/search-bar.html" %}
+        </div>
+    </nav>
+    <div class="main-logo top-contaniner align-center all-100 hide-medium hide-small hide-tiny">
+        <a href="/"><img src="{{ STATIC_MEDIA_URL }}labj/v2/img/logo.png" class="logo" /></a>
+    </div>
+</header><div class="mobile-date-subscribe-login hide-all show-medium show-small show-tiny">
+    <ul class="menu top-nav horizontal column-group flex-item-even">
+        <li class="date">{% now "l, F d, Y" %}</li>
+        <li><a href="https://account.labusinessjournal.com/labj/subscribe.aspx?pc=LA">Subscribe</a></li>
+        {% if user.is_authenticated %}
+            <li><a href="/accounts/logout/">Log Out</a></li>
+        {% else %}
+            <li><a href="/accounts/login/">Log In</a></li>
+        {% endif %}
+    </ul>
+</div><div class="wrapper">

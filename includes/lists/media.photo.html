@@ -1,0 +1,14 @@
+{% load mogrify permissions %}
+
+<div class="article-list-item">
+    <div class="info small-order-2 tiny-order-2">
+        <p><a href="{{ object.get_absolute_url }}">{% if object.caption %}{{ object.caption|striptags|truncatewords:40 }}{% else %}Photo detail{% endif %}</a></p>
+        <ul class="footer">
+            <li>Published on <a href="/photos/{{ object.pub_date|date:"Y/b/d" }}/">{{ object.pub_date|date }}</a></li>
+            {% if user|can_change:object %}
+            <li><a href="/admin/media/photo/{{ object.id }}/" class="admin_link">edit</a></li>
+            {% endif %}
+        </ul>
+    </div>
+    {% if object.photo %}<div class="thumbnail small-order-1 tiny-order-1"><a class="thumbnail" href="{{ object.get_absolute_url }}" title="Published {{ object.pub_date|date }}"><img src="{% mogrify object.photo.url thumbnail "210" %}" alt="photo thumbnail"></a></div>{% endif %}
+</div>

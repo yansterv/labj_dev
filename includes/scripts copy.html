@@ -1,0 +1,24 @@
+<script type="text/javascript" src="{{ STATIC_MEDIA_URL }}ellington_defaults/2.1.0/javascript/jquery.js"></script>
+{# <script type="text/javascript" src="{{ STATIC_MEDIA_URL }}ellington_defaults/2.1.0/javascript/jquery.ui.js"></script> #}
+<script type="text/javascript" src="{{ STATIC_MEDIA_URL }}ocbj/javascript/jquery-ui-1.7.2.custom.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_MEDIA_URL }}ellington_defaults/2.1.0/javascript/jquery.media.js"></script>
+<script type="text/javascript" src="{{ STATIC_MEDIA_URL }}ellington_defaults/2.1.0/javascript/jquery.menu.js"></script>
+<script type="text/javascript" src="{{ STATIC_MEDIA_URL }}ellington_defaults/2.1.0/javascript/jquery.carousel.js"></script>
+<script type="text/javascript" src="{{ STATIC_MEDIA_URL }}ellington_defaults/2.1.0/javascript/jquery.defaults.js"></script>
+
+<script type="text/javascript" src="{{ STATIC_MEDIA_URL }}ellington_defaults/2.1.0/javascript/swfobject.js"></script>
+<script type="text/javascript" src="{{ STATIC_MEDIA_URL }}ellington_defaults/2.1.0/javascript/flash.js"></script>
+<script type="text/javascript" src="{{ STATIC_MEDIA_URL }}ellington_defaults/2.1.0/javascript/audioplayer.js"></script>
+<script type="text/javascript" src="{{ STATIC_MEDIA_URL }}ellington_defaults/2.1.0/javascript/wmd/showdown.js"></script>
+<script type="text/javascript" src="{{ STATIC_MEDIA_URL }}ellington_defaults/2.1.0/javascript/wmd/wmd.js"></script>
+<script type="text/javascript" src="{{ STATIC_MEDIA_URL }}ellington_defaults/2.1.0/javascript/oembed_preview.js"></script>
+<script type="text/javascript" src="{{ STATIC_MEDIA_URL }}ellington_defaults/2.1.0/javascript/wmd/embed_toolbar.js"></script>
+
+<script type="text/javascript" src="{{ STATIC_MEDIA_URL }}ocbj/javascript/ie-hover-ns-pack.js"></script>
+<script type="text/javascript" src="{{ STATIC_MEDIA_URL }}ocbj/javascript/jquery.main.js"></script>
+<script type="text/javascript" src="{{ STATIC_MEDIA_URL }}ellington_defaults/2.1.0/javascript/jquery.site.js"></script>    
+{% if request.GET.popup %}
+  <script type="text/javascript">
+    Popup.handle_links({% if request.GET.interactive %}'interactive'{% endif %});
+  </script>
+{% endif %}

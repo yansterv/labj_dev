@@ -1,0 +1,930 @@
+{% load polls sectionfronts fragments %}
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+
+<head>
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+  <title>{% block fulltitle %}{% block title %}{% endblock %} | {{ site.name }}{% endblock %}</title>
+
+  {% block extended_meta %}{% endblock %}
+
+
+
+  {% include "includes/styles.html" %}
+
+  {% block extended_styles %}
+
+    <style type="text/css">
+
+      .logo { top:37px; }
+
+    </style>
+
+
+
+    {% get_section_front for "newsletter-signup-overlay" as overlay_sfront %}
+
+    {% if overlay_sfront.newsletter_signup_overlay %}
+
+        <link rel="stylesheet" type="text/css" href="{{ STATIC_MEDIA_URL }}labj/stylesheets/jquery.fancybox.css" media="screen" />
+
+    {% endif %}
+
+  {% endblock %}
+
+  {% block skin_style %}{% endblock %}
+
+
+
+  {% include "includes/scripts.html" %}
+
+  {% block extended_scripts %}
+
+    <script type="text/javascript">
+
+      $(document).ready(function() {
+
+        $('#pub-chooser').change(function() {
+
+            window.location = $('#cabj_nav').val();
+
+        });
+
+      });
+
+    </script>
+
+    <script type="text/javascript">
+
+      <!--
+
+        //configuration
+
+      OAS_url = 'http://oascentral.{{ site.domain }}/RealMedia/ads/';
+
+        //OAS_sitepage = window.location.hostname + window.location.pathname;
+
+        OAS_sitepage = '{% if 'labusinessjournal' in request.META.SERVER_NAME %}labusinessjournal{% endif %}{% if 'ocbj' in request.META.SERVER_NAME %}ocbj{% endif %}{% if 'sdbj' in request.META.SERVER_NAME %}sdbj{% endif %}{% if 'sfvbj' in request.META.SERVER_NAME %}sfvbj{% endif %}.www.clients.ellingtoncms.com/{% if 'labusinessjournal' in request.META.SERVER_NAME %}la{% endif %}{% if 'ocbj' in request.META.SERVER_NAME %}oc{% endif %}{% if 'sdbj' in request.META.SERVER_NAME %}sd{% endif %}{% if 'sfvbj' in request.META.SERVER_NAME %}sfv{% endif %}_homepage';
+
+        OAS_listpos = 'Top,TopRight,Middle,Middle1,Bottom,x92';
+
+        OAS_query = '';
+
+        OAS_target = '_top';
+
+        //end of configuration
+
+        OAS_version = 10;
+
+        OAS_rn = '001234567890'; OAS_rns = '1234567890';
+
+        OAS_rn = new String (Math.random()); OAS_rns = OAS_rn.substring (2, 11);
+
+        function OAS_NORMAL(pos) {
+
+          document.write('<A HREF="' + OAS_url + 'click_nx.ads/' + OAS_sitepage + '/1' + OAS_rns + '@' + OAS_listpos + '!' + pos + '?' + OAS_query + '" TARGET=' + OAS_target + '>');
+
+          document.write('<IMG SRC="' + OAS_url + 'adstream_nx.ads/' + OAS_sitepage + '/1' + OAS_rns + '@' + OAS_listpos + '!' + pos + '?' + OAS_query + '" BORDER=0></A>');
+
+        }
+
+      //-->
+
+    </script>
+
+    <script type="text/javascript">
+
+      <!--
+
+        OAS_version = 11;
+
+        if (navigator.userAgent.indexOf('Mozilla/3') != -1 || navigator.userAgent.indexOf('Mozilla/4.0 WebTV') != -1)
+
+            OAS_version = 10;
+
+        if (OAS_version >= 11)
+
+            document.write('<SCR' + 'IPT LANGUAGE=JavaScript1.1 SRC="' + OAS_url + 'adstream_mjx.ads/' + OAS_sitepage + '/1' + OAS_rns + '@' + OAS_listpos + '?' + OAS_query + '"><\/SCRIPT>');
+
+      //-->
+
+    </script>
+
+    <script type="text/javascript">
+
+      <!--
+
+        document.write('');
+
+        function OAS_AD(pos) {
+
+          if (OAS_version >= 11)
+
+            OAS_RICH(pos);
+
+          else
+
+            OAS_NORMAL(pos);
+
+        }
+
+      //-->
+
+    </script>
+
+
+
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+
+      _gaq.push(['_setAccount', 'UA-23956267-1']);
+
+      _gaq.push(['_trackPageview']);
+
+
+
+      (function() {
+
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+
+      })();
+
+    </script>
+
+
+
+    {% get_section_front for "newsletter-signup-overlay" as overlay_sfront %}
+
+    {% if overlay_sfront.newsletter_signup_overlay %}
+
+      <script type="text/javascript" src="{{ STATIC_MEDIA_URL }}labj/javascript/jquery.cookie.js"></script>
+
+      <script type="text/javascript" src="{{ STATIC_MEDIA_URL }}labj/javascript/jquery.fancybox.js"></script>
+
+      <script type="text/javascript" charset="utf-8">
+
+        $(document).ready(function() {
+
+          var COOKIE_NAME = 'newsletter_signup_popup';
+
+          var options = {path:'/'};
+
+          var date = new Date();
+
+
+
+          // see if there's a cookie set
+
+          if($.cookie(COOKIE_NAME)) {
+
+            return false;
+
+          } else {
+
+            date.setTime(date.getTime() + (24 * 60 * 60 * 2000));
+
+            $.cookie(COOKIE_NAME, 'labj', { path: '/', expires: date });
+
+            $(".fancybox").fancybox({
+
+              autoSize: false,
+
+              closeBtn: false,
+
+              height : 254,
+
+              padding: {
+
+                left: 1
+
+              },
+
+              width  : 542
+
+            }).trigger('click');
+
+          }
+
+        });
+
+      </script>
+
+    {% endif %}
+
+  {% endblock %}
+
+
+
+  {% block feed_link %}{% endblock %}
+
+</head>
+
+
+
+<body class="{% if request.GET.popup %}popup {% endif %}{% block body_class %}{% endblock %}" id="{% block body_id %}{% endblock %}">
+
+  <a class="fancybox fancybox.iframe" href="/newsletter-signup-overlay/"></a>
+
+  <div id="wrapper">
+
+    <h1 class="logo" style="background:url({{ STATIC_MEDIA_URL }}cbj/images/logos/{{ site.name|slugify }}-logo.gif) no-repeat;"><a href="/">{{ site.name }}</a></h1>
+
+    <div id="main">
+
+      {% block content_wrapper %}
+
+        <div id="content">
+
+            {% block content %}{% endblock content %}
+
+        </div>
+
+      {% endblock content_wrapper %}
+
+      {% block sidebar %}
+
+        <div id="sidebar">
+
+          {% load polls sectionfronts fragments %}
+
+          <a href="http://www.magnetmail.net/actions/subscription_form_labj.cfm"  target="_blank" class="link-mail">get  email  news  alerts <img width="50" height="21" src="{{ STATIC_MEDIA_URL }}ocbj/images/bg-link-mail.gif" alt="image description">&gt;&gt;</a>
+
+                      <br>
+
+          <form action="/search/" class="search" method="get">
+
+            <input type="text" class="text" value="Archive" name="q">
+
+            <input type="submit" class="btn" value="Search">
+
+          </form>
+
+           <hr>
+
+          <div class="side-bar-ad-300x250">
+
+            <script type="text/javaScript">
+
+              <!--
+
+                OAS_AD('Middle');
+
+              //-->
+
+            </SCRIPT>
+
+          </div>
+
+          <hr>
+
+           <div class="side-bar-ad-300x250">
+
+            <script type="text/javaScript">
+
+              <!--
+
+                OAS_AD('Middle1');
+
+              //-->
+
+            </SCRIPT>
+
+          </div>
+
+          {% block most_popular_box %}{% endblock most_popular_box %}
+
+          {% block podcast %}
+
+            {% if 'ocbj' in request.META.HTTP_HOST %}
+
+              {% fragment oc_homepage_videocast as videocast %}
+
+              {{ videocast.content|safe }}
+
+            {% endif %}
+
+            {% if 'labusinessjournal' in request.META.HTTP_HOST %}
+
+                <a class="ad" href="/podcasts_la">
+
+                  <img width="300" height="200" alt="image description" src="http://ocbj.media.clients.ellingtoncms.com/static/ocbj/images/img02.jpg">
+
+                </a>
+
+            {% endif %}
+
+            {% if 'sdbj' in request.META.HTTP_HOST %}
+
+              {% fragment sd_homepage_podcast as podcast %}
+
+              {{ podcast.content|safe }}
+
+            {% endif %}
+
+            {% if 'sfv' in request.META.HTTP_HOST %}
+
+              {% fragment sfv_homepage_podcast as podcast %}
+
+              {{ podcast.content|safe }}
+
+            {% endif %}
+
+          {% endblock %}
+
+          {% block poll %}
+
+            {% get_section_front for "home" as home %}
+
+            {% if home.poll.0 %}
+
+              <!--poll-->
+
+              <form action="{{ home.poll.0.get_absolute_url }}results/" class="poll" method="post">
+
+                <strong class="title">{{ home.poll.0.question }}</strong>
+
+                {% for choice in home.poll.0.choices.all %}
+
+                  <div class="row">
+
+                    <input type="radio" id="{{ choice.id }}" name="choice" value="{{ choice.id }}" class="radio">
+
+                    <label for="{{ choice.id }}">{{ choice.choice }}</label>
+
+                  </div>
+
+                {% endfor %}
+
+                <div class="row">
+
+                  <input type="submit" class="btn" value="cast vote">
+
+                </div>
+
+              </form>
+
+            {% endif %}
+
+          {% endblock poll %}
+
+        </div>
+
+      {% endblock sidebar %}
+
+      <div class="all-clear"></div>
+
+    </div>
+
+    <div id="header">
+
+      <ul id="nav">
+
+        <li><a href="/">HOME</a></li>
+
+        <li><a href="/{% if 'labusinessjournal' in request.META.SERVER_NAME %}la{% endif %}{% if 'ocbj' in request.META.SERVER_NAME %}oc{% endif %}{% if 'sdbj' in request.META.SERVER_NAME %}sd{% endif %}{% if 'sfvbj' in request.META.SERVER_NAME %}sfv{% endif %}lists/">LISTS</a></li>
+
+        <li><a href="/news/{% if 'labusinessjournal' in request.META.SERVER_NAME %}la{% endif %}{% if 'ocbj' in request.META.SERVER_NAME %}oc{% endif %}{% if 'sdbj' in request.META.SERVER_NAME %}sd{% endif %}{% if 'sfvbj' in request.META.SERVER_NAME %}sfv{% endif %}-finance/">FINANCE</a></li>
+
+        <li><a href="/news/{% if 'labusinessjournal' in request.META.SERVER_NAME %}la{% endif %}{% if 'ocbj' in request.META.SERVER_NAME %}oc{% endif %}{% if 'sdbj' in request.META.SERVER_NAME %}sd{% endif %}{% if 'sfvbj' in request.META.SERVER_NAME %}sfv{% endif %}-healthcare/">HEALTHCARE</a></li>
+
+        <li><a href="/news/{% if 'labusinessjournal' in request.META.SERVER_NAME %}la{% endif %}{% if 'ocbj' in request.META.SERVER_NAME %}oc{% endif %}{% if 'sdbj' in request.META.SERVER_NAME %}sd{% endif %}{% if 'sfvbj' in request.META.SERVER_NAME %}sfv{% endif %}-manufacturing/">MANUFACTURING</a></li>
+
+        <li><a href="/news/{% if 'labusinessjournal' in request.META.SERVER_NAME %}la{% endif %}{% if 'ocbj' in request.META.SERVER_NAME %}oc{% endif %}{% if 'sdbj' in request.META.SERVER_NAME %}sd{% endif %}{% if 'sfvbj' in request.META.SERVER_NAME %}sfv{% endif %}-real-estate/">REAL ESTATE</a></li>
+
+        <li><a href="/news/{% if 'labusinessjournal' in request.META.SERVER_NAME %}la{% endif %}{% if 'ocbj' in request.META.SERVER_NAME %}oc{% endif %}{% if 'sdbj' in request.META.SERVER_NAME %}sd{% endif %}{% if 'sfvbj' in request.META.SERVER_NAME %}sfv{% endif %}-services/">SERVICES</a></li>
+
+        <li><a href="/news/{% if 'labusinessjournal' in request.META.SERVER_NAME %}la{% endif %}{% if 'ocbj' in request.META.SERVER_NAME %}oc{% endif %}{% if 'sdbj' in request.META.SERVER_NAME %}sd{% endif %}{% if 'sfvbj' in request.META.SERVER_NAME %}sfv{% endif %}-technology/">TECHNOLOGY</a></li>
+
+        <li><a href="/news/{% if 'labusinessjournal' in request.META.SERVER_NAME %}la{% endif %}{% if 'ocbj' in request.META.SERVER_NAME %}oc{% endif %}{% if 'sdbj' in request.META.SERVER_NAME %}sd{% endif %}{% if 'sfvbj' in request.META.SERVER_NAME %}sfv{% endif %}-government/">GOVERNMENT</a></li>
+
+        <li><a href="/news/{% if 'labusinessjournal' in request.META.SERVER_NAME %}la-travel-leisure/{% endif %}{% if 'ocbj' in request.META.SERVER_NAME %}oc-tourism/{% endif %}{% if 'sdbj' in request.META.SERVER_NAME %}sd-travel-leisure/{% endif %}{% if 'sfvbj' in request.META.SERVER_NAME %}sfv-tourism/{% endif %}">TRAVEL/LEISURE</a></li>
+
+      </ul>
+
+      <div class="ad-holder">
+
+        {% block top_banner_ad %}
+
+          <SCRIPT LANGUAGE=JavaScript>
+
+            <!--
+
+              OAS_AD('Top');
+
+            //-->
+
+          </SCRIPT>
+
+        {% endblock %}
+
+      </div>
+
+    </div>
+
+    <div id="footer">
+
+      <div class="holder">
+
+        <div class="ad-holder">
+
+          {% block bottom_left_ad %}
+
+            <SCRIPT LANGUAGE=JavaScript>
+
+              <!--
+
+                OAS_AD('Bottom');
+
+              //-->
+
+            </SCRIPT>
+
+          {% endblock %}
+
+        </div>
+
+        {% comment %}
+
+        <div class="ad-holder">
+
+          {% block bottom_right_ad %}
+
+            <SCRIPT LANGUAGE=JavaScript>
+
+              OAS_AD('TopRight');
+
+            </SCRIPT>
+
+            <SCRIPT LANGUAGE=JavaScript>
+
+            OAS_AD('x92');
+
+             </SCRIPT>
+
+          {% endblock %}
+
+        </div>
+
+        {% endcomment %}
+
+      </div>
+
+      <div class="list-holder">
+
+        <div class="list-box">
+
+          <h2>BROWSE MORE</h2>
+
+          <ul>
+
+            <li><a href="/marketplace/">Classified</a></li>
+
+            <li><a href="{% if 'labusinessjournal' in request.META.HTTP_HOST %}/la-single-lists/{% endif %}{% if 'ocbj' in request.META.HTTP_HOST %}/oc-single-lists/{% endif %}{% if 'sdbj' in request.META.HTTP_HOST %}/sdlists/{% endif %}{% if 'sfvbj' in request.META.HTTP_HOST %}/sfvlists/{% endif %}">The Lists Archives</a></li>
+
+            <li><a href="/polls/">Poll Archive</a></li>
+
+            {#<li><a href="#">OCBJ Archives</a></li>#}
+
+          </ul>
+
+        </div>
+
+        <div class="list-box">
+
+          <h2>LEARN MORE</h2>
+
+          <ul>
+
+            <li><a href="/about/">About Us</a></li>
+
+            <li><a href="/privacy-policy-{% if 'labusinessjournal' in request.META.HTTP_HOST %}la{% endif %}{% if 'ocbj' in request.META.HTTP_HOST %}oc{% endif %}{% if 'sdbj' in request.META.HTTP_HOST %}sd{% endif %}{% if 'sfvbj' in request.META.HTTP_HOST %}sfv{% endif %}/">Privacy Policy</a></li>
+
+            <li><a href="/contact-{% if 'labusinessjournal' in request.META.HTTP_HOST %}labj{% endif %}{% if 'ocbj' in request.META.HTTP_HOST %}ocbj{% endif %}{% if 'sdbj' in request.META.HTTP_HOST %}sdbj{% endif %}{% if 'sfvbj' in request.META.HTTP_HOST %}sfvbj{% endif %}/">Contact Us</a></li>
+
+            <li><a href="{% url 'profiles_edit_profile' %}">Edit Profile</a></li>
+
+          </ul>
+
+        </div>
+
+        <div class="list-box">
+
+          <h2>SERVICES</h2>
+
+          <ul>
+
+            <li><a href="https://www.pubservice.com/subnew.aspx?PC=LA&FC=UNITED+STATES">Subscription Center</a></li>
+
+            <li><a href="/accounts/login/">Online Login/Register</a></li>
+
+            <li><a href="/advertise/">Advertise with Us</a></li>
+
+            <li><a href="http://www.magnetmail.net/actions/subscription_form_labj.cfm" target="_blank">Sign-Up for E-News Updates</a></li>
+
+          </ul>
+
+        </div>
+
+        <div class="list-box">
+
+          <h2>TOOLS</h2>
+
+          <ul>
+
+            <li><a href="/bizevents/">Calendar</a></li>
+
+            <li><a href="/newbizlists/">New Business Licenses</a></li>
+
+          </ul>
+
+        </div>
+
+        <div class="list-box">
+
+          <h2>OTHER JOURNALS</h2>
+
+          <ul>
+
+            {% if 'labusinessjournal' in request.META.SERVER_NAME %}
+
+              <li><a href="http://www.ocbj.com">Orange County Business Journal</a></li>
+
+              <li><a href="http://www.sdbj.com">San Diego Business Journal</a></li>
+
+              <li><a href="http://www.sfvbj.com">San Fernando Valley Business Journal</a></li>
+
+            {% endif %}
+
+            {% if 'ocbj' in request.META.SERVER_NAME %}
+
+              <li><a href="http://www.labusinessjournal.com">Los Angeles Business Journal</a></li>
+
+              <li><a href="http://www.sdbj.com">San Diego Business Journal</a></li>
+
+              <li><a href="http://www.sfvbj.com">San Fernando Valley Business Journal</a></li>
+
+            {% endif %}
+
+            {% if 'sdbj' in request.META.SERVER_NAME %}
+
+              <li><a href="http://www.labusinessjournal.com">Los Angeles Business Journal</a></li>
+
+              <li><a href="http://www.ocbj.com">Orange County Business Journal</a></li>
+
+              <li><a href="http://www.sfvbj.com">San Fernando Valley Business Journal</a></li>
+
+            {% endif %}
+
+            {% if 'sfvbj' in request.META.SERVER_NAME %}
+
+              <li><a href="http://www.labusinessjournal.com">Los Angeles Business Journal</a></li>
+
+              <li><a href="http://www.ocbj.com">Orange County Business Journal</a></li>
+
+              <li><a href="http://www.sdbj.com">San Diego Business Journal</a></li>
+
+            {% endif %}
+
+          </ul>
+
+        </div>
+
+      </div>
+
+      {% block contact_info%}
+
+      <p>&copy; {% now "Y" %} {{ site.name }}
+
+      {% if 'labusinessjournal' in request.META.HTTP_HOST or 'sfvbj' in request.META.HTTP_HOST %}
+
+        <span>Phone: 1-323-549-5225</span>
+
+        <span>
+
+          <script type="text/javascript">
+
+          //<![CDATA[
+
+          <!--
+
+          var x="function f(x){var i,o=\"\",l=x.length;for(i=0;i<l;i+=2) {if(i+1<l)o+=" +
+
+          "x.charAt(i+1);try{o+=x.charAt(i);}catch(e){}}return o;}f(\"ufcnitnof x({)av" +
+
+          " r,i=o\\\"\\\"o,=l.xelgnhtl,o=;lhwli(e.xhcraoCedtAl(1/)3=!84{)rt{y+xx=l;=+;" +
+
+          "lc}tahce({)}}of(r=i-l;1>i0=i;--{)+ox=c.ahAr(t)i};erutnro s.buts(r,0lo;)f}\\" +
+
+          "\"(4),6\\\"\\\\MERGGX31\\\\0X\\\\0J03\\\\\\\\33\\\\00\\\\02\\\\\\\\\\\\\\\\" +
+
+          "\\\\\\\\35\\\\01\\\\02\\\\\\\\01\\\\04\\\\03\\\\\\\\30\\\\03\\\\00\\\\\\\\0" +
+
+          "1\\\\01\\\\03\\\\\\\\32\\\\0r\\\\\\\\\\\\\\\\t7\\\\01\\\\\\\\26\\\\01\\\\02" +
+
+          "\\\\\\\\01\\\\03\\\\00\\\\\\\\\\\\r \\\\0n52;/-5$47<pm\\\\rr\\\\23\\\\0s\\\\"+
+
+          " (#?h=2e03\\\\\\\\+(l !-NPWO\\\\\\\\\\\\\\\\AG@UYED]NE/`urbq~umec~<kvk4l02\\"+
+
+          "\\\\\\32\\\\04\\\\02\\\\\\\\)U7N02\\\\\\\\\\\\n7\\\\03\\\\\\\\03\\\\0I\\\\0" +
+
+          "6\\\\0Y\\\\IA11->'>7$17\\\\\\\\#;$.&2%,\\\"\\\\f(;} ornture;}))++(y)^(iAtde" +
+
+          "Coarchx.e(odrChamCro.fngriSt+=;o27=1y%+;y+4)<6(iif){++;i<l;i=0(ior;fthnglex" +
+
+          ".l=\\\\,\\\\\\\"=\\\",o iar{vy)x,f(n ioctun\\\"f)\")"                        ;
+
+          while(x=eval(x));
+
+          //-->
+
+          //]]>
+
+          </script>
+
+        </span>
+
+      {% endif %}
+
+      {% if 'ocbj' in request.META.HTTP_HOST %}
+
+        <span>Phone: 1-949-833-8373</span>
+
+        <span>
+
+          <script type="text/javascript">
+
+          //<![CDATA[
+
+          <!--
+
+          var x="function f(x){var i,o=\"\",ol=x.length,l=ol;while(x.charCodeAt(l/13)!" +
+
+          "=92){try{x+=x;l+=l;}catch(e){}}for(i=l-1;i>=0;i--){o+=x.charAt(i);}return o" +
+
+          ".substr(0,ol);}f(\")401,\\\"100\\\\t\\\\300\\\\630\\\\420\\\\310\\\\U430\\\\"+
+
+          "610\\\\\\\\\\\\_L000\\\\GNHEiPHE330\\\\600\\\\771\\\\000\\\\}530\\\\zriuo:;" +
+
+          "Dzyv:ypr771\\\\Ovbo1e}dngh&_?ge410\\\\520\\\\\\\\\\\\230\\\\F[P130\\\\230\\" +
+
+          "\\020\\\\000\\\\230\\\\000\\\\600\\\\^330\\\\000\\\\010\\\\100\\\\630\\\\t\\"+
+
+          "\\600\\\\410\\\\\\\"(f};o nruter};))++y(^)i(tAedoCrahc.x(edoCrahCmorf.gnirt" +
+
+          "S=+o;721=%y{)++i;l<i;0=i(rof;htgnel.x=l,\\\"\\\"=o,i rav{)y,x(f noitcnuf\")" ;
+
+          while(x=eval(x));
+
+          //-->
+
+          //]]>
+
+          </script>
+
+        </span>
+
+      {% endif %}
+
+      {% if 'sdbj' in request.META.HTTP_HOST %}
+
+        <span>Phone: 1-858-277-6391</span>
+
+        <span>
+
+          <script type="text/javascript">
+
+          //<![CDATA[
+
+          <!--
+
+          var x="function f(x){var i,o=\"\",l=x.length;for(i=0;i<l;i+=2) {if(i+1<l)o+=" +
+
+          "x.charAt(i+1);try{o+=x.charAt(i);}catch(e){}}return o;}f(\"ufcnitnof x({)av" +
+
+          " r,i=o\\\"\\\"o,=l.xelgnhtl,o=;lhwli(e.xhcraoCedtAl(1/)3=!94{)rt{y+xx=l;=+;" +
+
+          "lc}tahce({)}}of(r=i-l;1>i0=i;--{)+ox=c.ahAr(t)i};erutnro s.buts(r,0lo;)f}\\" +
+
+          "\"(5),9\\\"\\\\00\\\\0n\\\\\\\\\\\\02\\\\01\\\\02\\\\\\\\25\\\\00\\\\01\\\\" +
+
+          "\\\\3T03\\\\\\\\17\\\\0_\\\\S^01\\\\0D\\\\HOjXM[_CWKQN37\\\\02\\\\00\\\\\\\\"+
+
+          "<C!Av~qm6cH7}~>rle7i17\\\\\\\\xKllh~iv8ptn22\\\\04\\\\02\\\\\\\\35\\\\06\\\\"+
+
+          "02\\\\\\\\%X1E02\\\\\\\\23\\\\07\\\\00\\\\\\\\34\\\\0S\\\\23\\\\0M\\\\GR00\\"+
+
+          "\\01\\\\00\\\\\\\\\\\\t7\\\\03\\\\\\\\03\\\\03\\\\03\\\\\\\\37\\\\0I\\\\22\\"+
+
+          "\\03\\\\01\\\\\\\\01\\\\06\\\\01\\\\\\\\27\\\\02\\\\00\\\\\\\\17\\\\0;\\\\\\"+
+
+          "\"\\\\f(;} ornture;}))++(y)^(iAtdeCoarchx.e(odrChamCro.fngriSt+=;o27=1y%){+" +
+
+          "+;i<l;i=0(ior;fthnglex.l=\\\\,\\\\\\\"=\\\",o iar{vy)x,f(n ioctun\\\"f)\")"  ;
+
+          while(x=eval(x));
+
+          //-->
+
+          //]]>
+
+          </script>
+
+        </span>
+
+      {% endif %}
+
+
+
+      {% endblock %}
+
+      </div>
+
+      <form action="#" class="form" id="pub-chooser">
+
+        <select id="cabj_nav">
+
+          <option value="http://www.labusinessjournal.com" {% if 'labusinessjournal' in request.META.SERVER_NAME %}selected{% endif %}>Los Angeles Business Journal</option>
+
+          <option value="http://www.ocbj.com" {% if 'ocbj' in request.META.SERVER_NAME %}selected{% endif %}>Orange County Business Journal</option>
+
+          <option value="http://www.sfvbj.com" {% if 'sfvbj' in request.META.SERVER_NAME %}selected{% endif %}>San Fernando Valley Business Journal</option>
+
+          <option value="http://www.sdbj.com" {% if 'sdbj' in request.META.SERVER_NAME %}selected{% endif %}>San Diego Business Journal</option>
+
+        </select>
+
+        <div class="btn-holder">
+
+          <div class="btn-subscribe">
+
+            <a href="#" class="btn">Subscribe</a>
+
+            <ul class="drop">
+
+              <li><a href="https://www.pubservice.com/subnew.aspx?PC=LA&FC=UNITED+STATES">Print Edition</a></li>
+
+              <li><a href="https://www.pubservice.com/subinfo.aspx?PC={% if 'labusinessjournal' in request.META.HTTP_HOST %}LA{% endif %}{% if 'ocbj' in request.META.HTTP_HOST %}OC{% endif %}{% if 'sdbj' in request.META.HTTP_HOST %}SD{% endif %}{% if 'sfvbj' in request.META.HTTP_HOST %}SF{% endif %}&AN=&Zp=&PK=">Renewals</a></li>
+
+              <li><a href="/accounts/profile/edit/">Edit Your Subscription Account</a></li>
+
+              <li><a href="http://www.magnetmail.net/actions/subscription_form_labj.cfm" target="_blank">Email News Updates</a></li>
+
+              <li><a href="/rss/headlines/">RSS Headlines Feed</a></li>
+
+              <li><a href="https://www.pubservice.com/subnew1.aspx?PC=LA&PK" target="_blank">LBSU Student</a></li>
+
+            </ul>
+
+          </div>
+
+          <div class="btn-advertise">
+
+            <a href="/advertise/" class="btn">Advertise</a>
+
+            <ul class="drop">
+
+              <li><a href="/advertise/">Online Display Ads</a></li>
+
+              <li><a href="/advertise/">Business Marketplace</a></li>
+
+            </ul>
+
+          </div>
+
+          <div class="btn-events">
+
+            <a href="/bizevents/" class="btn">Events</a>
+
+            <ul class="drop">
+
+              <li><a href="/bizevents/">
+
+                {% if 'ocbj' in request.META.HTTP_HOST %}OC Business Events{% endif %}
+
+                {% if 'labusinessjournal' in request.META.HTTP_HOST %}LA Business Events{% endif %}
+
+                {% if 'sdbj' in request.META.HTTP_HOST %}SD Business Events{% endif %}
+
+                {% if 'sfvbj' in request.META.HTTP_HOST %}SF Business Events{% endif %}
+
+              </a></li>
+
+            </ul>
+
+          </div>
+
+          <div class="btn-the-lists">
+
+            <a href="/{% if 'ocbj' in request.META.HTTP_HOST %}oclists{% endif %}{% if 'labusinessjournal' in request.META.HTTP_HOST %}lalists{% endif %}{% if 'sdbj' in request.META.HTTP_HOST %}sdlists{% endif %}{% if 'sfvbj' in request.META.HTTP_HOST %}sfvlists{% endif %}/" class="btn">The Lists</a>
+
+            <ul class="drop">
+
+              <li><a href="/{% if 'ocbj' in request.META.HTTP_HOST %}oclists{% endif %}{% if 'labusinessjournal' in request.META.HTTP_HOST %}lalists{% endif %}{% if 'sdbj' in request.META.HTTP_HOST %}sdlists{% endif %}{% if 'sfvbj' in request.META.HTTP_HOST %}sfvlists{% endif %}/">The Book of Lists</a></li>
+
+              <li><a href="/{% if 'ocbj' in request.META.HTTP_HOST %}oc{% endif %}{% if 'labusinessjournal' in request.META.HTTP_HOST %}la{% endif %}{% if 'sdbj' in request.META.HTTP_HOST %}sd{% endif %}{% if 'sfvbj' in request.META.HTTP_HOST %}sfv{% endif %}-single-lists/">Weekly Lists</a></li>
+
+              <li><a href="/newbizlists/">New Business Names</a></li>
+
+            </ul>
+
+          </div>
+
+          <div class="btn-resources">
+
+            <a href="#" class="btn">Resources</a>
+
+            <ul class="drop">
+
+              <li><a href="/supplements/">Supplements</a></li>
+
+              <li><a href="/newsstands/">Newsstand Locations</a></li>
+
+              <li><a href="/marketplace/">Marketplace</a></li>
+
+              <li><a href="http://www.magnetmail.net/actions/subscription_form_labj.cfm" target="_blank">Email News Updates</a></li>
+
+              <li><a href="/rss/headlines/">RSS Headlines Feed</a></li>
+
+            </ul>
+
+          </div>
+
+          <div class="btn-about-us">
+
+            <a href="/about/" class="btn">About Us</a>
+
+            <ul class="drop">
+
+              <li>
+
+                <a href="/about/">
+
+                  {% if 'ocbj' in request.META.HTTP_HOST %}OCBJ{% endif %}
+
+                  {% if 'labusinessjournal' in request.META.HTTP_HOST %}LABJ{% endif %}
+
+                  {% if 'sdbj' in request.META.HTTP_HOST %}SDBJ{% endif %}
+
+                  {% if 'sfvbj' in request.META.HTTP_HOST %}SFVBJ{% endif %}
+
+                </a>
+
+              </li>
+
+              <li><a href="/staff/">Staff</a></li>
+
+              <li><a href="/privacy-policy-la/">Privacy Policy</a></li>
+
+              <li><a href="/contact-us/">Contact Us</a></li>
+
+              <li><a href="{% url 'profiles_edit_profile' %}">Edit Profile</a></li>
+
+            </ul>
+
+          </div>
+
+          <a href="/accounts/{% if user.is_authenticated %}logout{% else %}login{% endif %}/" class="btn-login" style="background:url({{ STATIC_MEDIA_URL }}cbj/images/base/btn-log{% if user.is_authenticated %}out{% else %}in{% endif %}.gif) no-repeat">login</a>
+
+        </div>
+
+      </form>
+
+    </div>
+
+    <script type="text/javascript">
+
+      var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+
+      document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+
+    </script>
+
+    <script type="text/javascript">
+
+      try{
+
+          var pageTracker = _gat._getTracker("UA-94798-13");
+
+          pageTracker._trackPageview();
+
+      } catch(err) {}
+
+    </script>
+
+  </body>
+
+</html>
+
+
+

@@ -1,0 +1,78 @@
+{% extends "search/base_search.html" %}
+{% block body_class %}{{ block.super }} search_vertical{% endblock %}
+{% block content %}
+{% load dictutil humanize content search mogrify delta %}{% exclude_from_dict request.GET "page" as page_query_string %}
+{% exclude_from_dict request.GET "sortby" as sortby_query_string %}
+{% exclude_from_dict request.GET "author" as author_query_string %}
+{% exclude_from_dict request.GET "start_date","end_date","sortby" as date_query_string %}<h2 class="search_title">
+    <a href="/search/?{{ date_query_string.urlencode }}">All results</a> /
+    {% if request.GET.author %}
+    <a href="?{{ author_query_string.urlencode }}">{{ verbose_name_plural|capfirst }}</a> /
+    <span>{{ request.GET.author }}</span>
+    {% else %}
+    <span>{{ verbose_name_plural|capfirst }}</span>
+    {% endif %}
+</h2>{% if recommended %}
+<div class="recommended">
+    <h3>Recommended results</h3>
+    <ul>
+        {% for item in recommended %}
+        <li><a href="{{ item.url }}">{{ item.title }}</a></li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}<div class="result_list">
+    <div class="facets">
+        <h3>Sort By</h3>
+        <ul>
+            <li{% if not request.GET.sortby %} class="on"{% endif %}><a href="?{{ date_query_string.urlencode }}">Relevance</a></li>
+            {% with now|date:"m/d/Y" as start_date %}
+            <li{% if request.GET.sortby == "date" %} class="on"{% endif %}><a href="?{{ date_query_string.urlencode }}&amp;sortby=date">Date</a></li>
+            {% endwith %}
+        </ul>
+        <h3>Date</h3>
+        <ul>
+            <li{% if not request.GET.sortby and not request.GET.start_date %} class="on"{% endif %}><a href="?{{ date_query_string.urlencode }}">Any time</a></li>
+            {% with now|date:"m/d/Y" as start_date %}
+            <li{% if request.GET.start_date %}{% if start_date == request.GET.start_date %} class="on"{% endif %}{% endif %}><a href="?{{ date_query_string.urlencode }}&amp;start_date={{ start_date }}&amp;end_date={{ now|date:"m/d/Y" }}">Past 24 hours</a></li>
+            {% endwith %}
+            {% with now|delta:"days=-7"|date:"m/d/Y" as start_date %}
+            <li{% if request.GET.start_date %}{% if start_date == request.GET.start_date %} class="on"{% endif %}{% endif %}><a href="?{{ date_query_string.urlencode }}&amp;start_date={{ start_date }}&amp;end_date={{ now|date:"m/d/Y" }}">Past week</a></li>
+            {% endwith %}
+            {% with now|delta:"months=-1"|date:"m/d/Y" as start_date %}
+            <li{% if request.GET.start_date %}{% if start_date == request.GET.start_date %} class="on"{% endif %}{% endif %}><a href="?{{ date_query_string.urlencode }}&amp;start_date={{ start_date }}&amp;end_date={{ now|date:"m/d/Y" }}">Past month</a></li>
+            {% endwith %}
+            {% with now|delta:"years=-1"|date:"m/d/Y" as start_date %}
+            <li{% if request.GET.start_date %}{% if start_date == request.GET.start_date %} class="on"{% endif %}{% endif %}><a href="?{{ date_query_string.urlencode }}&amp;start_date={{ start_date }}&amp;end_date={{ now|date:"m/d/Y" }}">Past year</a></li>
+            {% endwith %}
+        </ul>        {% if not request.GET.author %}
+        <h3>Authors</h3>
+        <ul>
+            <li{% if not request.GET.author %} class="on"{% endif %}><a href="?{{ author_query_string.urlencode }}">Everyone</a></li>
+            {% for author,count in facets.fields.author_exact|slice:":10" %}
+            {% if count %}<li{% if request.GET.author == author %} class="on"{% endif %}><a href="?{{ author_query_string.urlencode }}&amp;author={{ author }}">{{ author }}</a> ({{ count }})</li>{% endif %}
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>    {% if query %}
+    {% if not page.object_list %}
+    <div class="list">
+        <div class="message message_info">
+            <h4>No search results found</h4>
+            <p>Your search for "{{ query }}" didn't return any results. Try broadening your search terms.</p>
+        </div>
+        {% include "includes/pagination.html" %}
+    </div>
+    {% else %}
+    <div class="list"><br />
+        {% for result in page.object_list %}
+        {% with result.object as object %}
+        {% render_template_for object in "includes/lists" %}
+        {% endwith %}
+        {% endfor %}
+        {% include "includes/pagination.html" %}
+    </div>
+    {% endif %}
+    {% endif %}
+</div>
+{% endblock %}

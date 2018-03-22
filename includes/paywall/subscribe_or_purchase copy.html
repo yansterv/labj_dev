@@ -1,0 +1,185 @@
+{% block extended_styles %}
+  {{ block.super }}
+  <style type="text/css">
+    {##main { background:none; }#}
+    .access-bar {
+      width:410px;
+      margin:0 0 0 104px;
+      overflow:hidden;
+    }
+    .access-bar a {
+      background-color:#00426F;
+      text-align:center;
+      color:#fff;
+      font-weight:bold;
+      width:165px;
+      height:32px;
+      padding:10px;
+      margin-right:20px;
+      border-radius:5px;
+      display:block;
+      float:left;
+      font-size:16px;
+    }
+    h4 {
+      padding:10px;
+      background-color:#F2F5F8;
+      margin-bottom:0;
+    }
+    .container-box {
+      padding:10px;
+      border-right:1px solid #F2F5F8;
+      border-bottom:1px solid #F2F5F8;
+      border-left:1px solid #F2F5F8;
+      margin-bottom:20px;
+    }
+    /*
+    form.signin_form {
+      padding:10px;
+    }
+    */
+    form p {
+      border:none;
+    }
+    form p:last-child {
+      padding-bottom:0;
+      margin-bottom:0;
+    }
+  </style>
+{% endblock %}
+
+
+{% if ESP_ACCOUNT_NUMBER %}
+  <h4>Subscription Account Login Error</h4>
+
+  <p>
+    <strong>Your subscription is on file as #{{ ESP_ACCOUNT_NUMBER }}. However, your login is being rejected.</strong> 
+  </p>
+
+  {% ifequal ESP_ERROR INCORRECT_USER %}
+    <p>
+      Your subscription account number is being rejected. Please confirm your subscription account number and re-enter it by clicking <a href="{% url 'profiles_edit_profile' %}">here</a>. If you do not know your subscription account number you can retrieve it <a href="https://www.pubservice.com/PasswordHelp.aspx?PC={% if 'labusinessjournal' in request.META.HTTP_HOST %}LA{% endif %}{% if 'ocbj' in request.META.HTTP_HOST %}OC{% endif %}{% if 'sdbj' in request.META.HTTP_HOST %}SD{% endif %}{% if 'sfvbj' in request.META.HTTP_HOST %}SF{% endif %}">here</a>
+  {% endifequal %}
+    </p>
+  {% ifequal ESP_ERROR INCORRECT_PASSWORD %}
+    <p>
+      Your subscription account password is being rejected. It is typically the same as your zip code. Please confirm your subscription account password and re-enter it by clicking <a href="{% url 'profiles_edit_profile' %}">here</a>. If you do not know your subscription account password you can retrieve it <a href="https://www.pubservice.com/PasswordHelp.aspx?PC={% if 'labusinessjournal' in request.META.HTTP_HOST %}LA{% endif %}{% if 'ocbj' in request.META.HTTP_HOST %}OC{% endif %}{% if 'sdbj' in request.META.HTTP_HOST %}SD{% endif %}{% if 'sfvbj' in request.META.HTTP_HOST %}SF{% endif %}">here</a>   
+    </p>
+  {% endifequal %}
+
+  {% ifequal ESP_ERROR SUBSCRIPTION_EXPIRED %}
+    <p>
+    Your print subscription has expired. Please renew your subscription by <a href="https://www.pubservice.com/subrenew.aspx?PC={% if 'labusinessjournal' in request.META.HTTP_HOST %}LA{% endif %}{% if 'ocbj' in request.META.HTTP_HOST %}OC{% endif %}{% if 'sdbj' in request.META.HTTP_HOST %}SD{% endif %}{% if 'sfvbj' in request.META.HTTP_HOST %}SF{% endif %}&FC=UNITED+STATES">clicking here</a> then updting your subscription account information in your <a href="{% url 'profiles_edit_profile' %}">user profile</a>.
+    </p>
+  {% endifequal %}
+
+  {% ifequal ESP_ERROR UNKNOWN_AUTH_BACKEND_ERROR %}
+    <p>
+      An unknown error has been encountered with your auth info - please contact Customer Service for further assistance.
+    </p>
+  {% endifequal %}
+{% else %}
+  {% comment %}
+  {% if user.is_authenticated %}
+    <h4>You must login or register your subscription account to view this content. </h4>
+    <p>We do not have a subscription account number associated with this {{ site.domain }} account.</p>
+    <p>If you know your subscription information click "Register Your Subscription" or click "Subscribe Now" to create a subscription.</p>
+    <div class="access-bar">
+      {% if not ESP_ACCOUNT_NUMBER %}
+      <a href="/accounts/profile/edit/?next={{ request.path_info }}">Register Your Subscription</a>
+      <a href="https://www.pubservice.com/subnew.aspx?PC={% if 'labusinessjournal' in request.META.HTTP_HOST %}LA{% endif %}{% if 'ocbj' in request.META.HTTP_HOST %}OC{% endif %}{% if 'sdbj' in request.META.HTTP_HOST %}SD{% endif %}{% if 'sfvbj' in request.META.HTTP_HOST %}SF{% endif %}&FC=UNITED+STATES" style="line-height:30px;">Subscribe Now</a>
+    </div>
+    {% endif %}
+  {% else %}
+  {% endcomment %}
+  <h4>Paid subscribers to the {{ site.name }} print edition have access to:</h4>
+    <div class="container-box">
+      <ul>
+        <li>Late breaking news and news updates</li>
+        <li>The full content of the print edition formatted for online reading</li>
+        <li>Archived articles from previous editions of the {{ site.name }}</li>
+        <li>Special supplement content</li>
+        <li>Weekly lists</li>
+        <li>Your Account and Account Profile</li>
+      </ul>
+      <p>
+        Visitors to this Web site may search the archives and purchase single copies of articles. To purchase an article please scroll to the bottom of the page.  Paid print subscribers have full access to all Web site content at no additional charge to their print subscription rate.
+      </p>
+      <p>
+      If you are a print subscriber and have registered previously on {{ site.domain }}, please <a href="/accounts/login/">CLICK HERE</a>.
+      </p>
+      <p>
+        If you are a print subscriber and you have not yet registered, please <a href="/accounts/register/">CLICK HERE</a>.
+      </p>
+      <p class="strong">Contact customer service:</p>
+      {% if 'labusinessjournal' in request.META.HTTP_HOST or 'sfvbj' in request.META.HTTP_HOST %}
+        <ul>
+          <li>Phone: 1-323-549-5225 during normal business hours</li>
+          <li>Fax: 1-323-549-5255</li>
+          <li>Email: circulation1@labusinessjournal.com</li>
+        </ul>
+      {% endif %}
+      {% if 'ocbj' in request.META.HTTP_HOST %}
+        <ul>
+          <li>Phone: 1-949-833-8373 during normal business hours</li>
+          <li>Fax: 1-949-833-8751</li>
+          <li>Email: cox@ocbj.com</li>
+        </ul>
+      {% endif %}
+      {% if 'sdbj' in request.META.HTTP_HOST %}
+        <ul>
+          <li>Phone: 1-858-277-6391 during normal business hours</li>
+          <li>Fax: 1-858-277-6398</li>
+          <li>Email: smsnyder@sdbj.com</li>
+        </ul>
+      {% endif %}
+    </div>
+    <h4 id="registered-user">Registered Users Sign In</h4>
+    <div id="login" class="container-box">
+      {% if form.errors %}
+        <div class="message message_error">
+          <h4>Please correct the errors below</h4>
+          {% if form.non_field_errors %}<p>{{ form.non_field_errors }}</p>{% endif %}
+        </div>
+      {% endif %}
+      <form action="/accounts/login/" method="post" class="signin_form form_toggle">{% csrf_token %}
+        <p>
+          <label for="id_username">Enter Username</label> <input id="id_username" type="text" name="username" maxlength="30" />
+        </p>
+          <p>
+            <label for="id_password">Password </label> <input type="password" name="password" id="id_password" />
+            <br>
+            Forgot password? <a href="/accounts/password/reset/"><small>Click Here</small></a>
+          </p>
+
+          <input type="hidden" name="next" value="{{ request.META.PATH_INFO }}">
+          <p><button type="submit">Sign in</button></p>
+      </form>
+    </div>
+    <h4>Paid Subscribers to the Print Edition Who Have Not Yet Registered</h4>
+    <div class="container-box">
+      <p>Paid Subscribers to the Print Edition of the {{ site.name }} Who Have Not Yet Registered Please <a href="/accounts/register/">CLICK HERE</a></p>
+    </div>
+    <h4>Not A Paid Subscriber to the Print Edition</h4>
+    <div class="container-box">
+      <p>If You Are Not a Paid Subscriber to the Print Edition of the {{ site.name }} And You Would Like to Subscribe, Please <a href="https://www.pubservice.com/subnew.aspx?PC={% if 'labusinessjournal' in request.META.HTTP_HOST %}LA{% endif %}{% if 'ocbj' in request.META.HTTP_HOST %}OC{% endif %}{% if 'sdbj' in request.META.HTTP_HOST %}SD{% endif %}{% if 'sfvbj' in request.META.HTTP_HOST %}SF{% endif %}&FC=UNITED+STATES">CLICK HERE</a>.</p>
+    </div>
+  {# endif #}
+
+{% endif %}
+{% comment %}
+  <h4>Purchase just this article?</h4>
+  <div class="container-box">
+    <p>To Search the Archives, and Purchase this Articles Please Click "Buy" Below</p>
+    <form method="POST" action="{{ PAYPAL_FORM_URL }}">
+      <input type="hidden" name="LOGIN" value="{{ PAYPAL_LOGIN_ID }}">
+      <input type="hidden" name="PARTNER" value="{{ PAYPAL_PARTNER_ID }}">
+      <input type="hidden" name="TYPE" value="S">
+      <input type="hidden" name="AMOUNT" value="{{ ITEM_COST }}">
+      <input type="hidden" name="CUSTID" value="{{ CUSTID }}">
+      <input type="hidden" name="COMMENT1" value="{{ COMMENT1 }}">
+      <input type="hidden" name="USER1" value="{{ USER1 }}">
+      <input type="submit" value="Buy">
+    </form>
+</div>
+{% endcomment %}

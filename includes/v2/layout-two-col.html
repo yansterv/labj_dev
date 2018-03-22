@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>{% block fulltitle %}{% block title %}{% endblock %} | {{ site.name }}{% endblock %}</title>
+    {% block extended_meta %}{% endblock %}
+	
+	<link rel="shortcut icon" href="{{ STATIC_MEDIA_URL }}labj/v2/img/favicon.ico" />
+	<link href="{{ STATIC_MEDIA_URL }}labj/v2/css/app.css?v={% now "YmdHi" %}&amp;r=1" rel="stylesheet" />
+	<link href="https://fonts.googleapis.com/css?family=Cabin|Yrsa" rel="stylesheet">
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+	<link href="{{ STATIC_MEDIA_URL }}labj/v2/css/menu.css" rel="stylesheet" />
+	<link href="{{ STATIC_MEDIA_URL }}labj/v2/css/datajoe.css" rel="stylesheet" />
+
+    {% include "includes/v2/header.html" %}
+    {% block extended_scripts %}{% endblock %}
+    {% block feed_link %}{% endblock %}
+</head>
+	
+{% load polls sectionfronts fragments %}
+
+<body class="ink-grid {% block body_class %}{% endblock body_class %}" id="{% block body_id %}{% endblock %}">
+
+{% include "includes/v2/body-start.html" %}
+	<div class="page-wrap">
+    {% include "includes/v2/sections-menu.html" %}
+    <div class="all-100">
+        <div class="module push-center">
+            <div class="top-adzone align-center">
+                <figure>
+                    {% include "includes/v2/ad-top.html" %}
+                </figure>
+            </div>
+        </div>
+    </div>
+	<section class="centerwell wrap column-group article single labj-single-article">
+		{% block breadcrumb_content %}{% endblock breadcrumb_content %}
+		<div class="all-65 medium-100 small-100 tiny-100">
+            <div class="main-content">
+                <!--{% block subnav %}{% endblock subnav %}-->
+                {% block content_title %}{% endblock content_title %}
+                {% block content %}{% endblock content %}
+            </div>
+        </div>
+		{% block sidebar %}
+        <aside class="sidebar fp-sidebar default-sidebar all-35 medium-100 small-100 tiny-100">
+            <div class="column-group modules all-100 share-module">
+                {% include "includes/v2/module-share.html" %}
+            </div>
+            <div class="column-group adzones">
+                <div class="module half-bottom-space">
+                    {% include "includes/v2/ad-middle.html" %}
+                </div>
+                <div class="module half-bottom-space">
+                    <div class="module-content imageholder">
+                        {% include "includes/v2/ad-middle1.html" %}
+                    </div>
+                </div>
+                <div class="module half-bottom-space">
+                    <div class="module-content imageholder">
+                        {% include "includes/v2/ad-position1.html" %}
+                    </div>
+                </div>
+            </div>
+            {% block sidebar_modules %}{% endblock %}
+            {% include "includes/v2/module-podcast.html" %}            {% block poll %}            {% get_section_front for "home" as home %}            {% if home.poll.0 %}                <div class="fp-sb-poll">
+                    <div class="fb-sb-poll-header">
+                        <h2>Reader Poll</h2>
+                        <div class="poll-desc">
+                            {{ home.poll.0.question }}
+                        </div>
+                        <form action="{{ home.poll.0.get_absolute_url }}results/" class="poll" method="post">
+                            <div class="poll-options">
+                                {% for choice in home.poll.0.choices.all %}
+                                <div class="poll-option">
+                                    <input type="radio" id="{{ choice.id }}" name="choice" value="{{ choice.id }}" class="radio" />
+                                    <label for="{{ choice.id }}">{{ choice.choice }}</label>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            <input type="submit" class="btn" value="cast vote" />
+                        </form>
+                    </div>
+                </div><!-- fp-sb-poll -->            {% endif %}            {% endblock poll %}        </aside>
+	{% endblock sidebar %}    </section>
+    <div class="all-100">
+        <div class="module push-center ">
+            <div class="btm-adzone align-center">
+                <figure>
+                    {% include "includes/v2/ad-bottom.html" %}
+                </figure>
+            </div>
+        </div>
+    </div>
+</div>
+{% include "includes/v2/footer.html" %}
+	<script src="{{ STATIC_MEDIA_URL }}labj/v2/js/app.min.js?v={% now "YmdH" %}"></script>
+  </body>
+</html>

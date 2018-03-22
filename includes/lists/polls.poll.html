@@ -1,0 +1,16 @@
+{% extends "includes/lists/default.html" %}
+
+
+{% block item %}
+  {% load mailfriend rating_tags permissions %}
+
+<div class="poll-list-item">
+  <h4><a href="{{ object.get_absolute_url }}">{{ object.question }}</a></h4>
+    <div class="list-item-controls">
+        <a href="{% mailfriend_link for object %}" rel="popup(600x650)">Share</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="{{ object.get_absolute_url }}#comments">Discuss</a>
+        {% if user|can_change:object %}
+        &nbsp;&nbsp;|&nbsp;&nbsp;<a href="/admin/polls/poll/{{ object.pk }}/" class="admin_link">edit</a></li>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

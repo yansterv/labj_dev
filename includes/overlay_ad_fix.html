@@ -1,0 +1,82 @@
+<link rel="stylesheet" href="{{ STATIC_MEDIA_URL }}labj/v2/css/jquery.modal.min.css" type="text/css" media="screen" charset="utf-8" />
+
+<script>
+  document.addEventListener("DOMContentLoaded", function(){
+    if(window.location.pathname=='/'){
+        var last_time = localStorage.getItem('showAdTime');
+        var show_it = false;
+        if (last_time){
+           var diff = (new Date).getTime() - last_time;
+           if (diff > 86400000){
+           show_it = true;
+           localStorage.setItem('showAdTime', (new Date).getTime());
+           }
+        } else {
+           localStorage.setItem('showAdTime', (new Date).getTime());
+           show_it = true;
+        }
+        //show_it = true;
+        if (show_it){
+          var script = document.createElement('script');
+          script.addEventListener('load', function(){
+            $('#ad-modal').css('display', 'inline-block').modal();
+          });
+          script.setAttribute('src', '{{ STATIC_MEDIA_URL }}labj/v2/js/jquery.modal.min.js');
+          document.querySelector('body').appendChild(script);
+        }
+      }
+  });
+</script>
+<style>
+  .modal {
+    display: none;
+    width: auto;
+    max-width: 90vw;
+    -webkit-box-shadow: 0 0 10px rgba(0,0,0,.25);
+    box-shadow: 0 0 10px rgba(0,0,0,.25);
+  }
+  .modal-content {
+    padding: 1rem 0;
+  }
+  .modal-content img {
+    height: auto;
+    max-height: 50vh;
+  }
+  body .blocker {
+      background-color: rgba(255,255,255,.84);
+  }
+  
+  /* IE10 and 11 */
+  @media all and (max-width: 450px) and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    body .blocker::after {
+      content: none;
+    }
+    body .modal {
+      position: absolute;
+      max-width: 100vw;
+      left: 0;
+      top: 100px;
+    }
+  }
+
+
+</style>
+<div id="ad-modal" class="modal">
+<div class="modal-content">
+    <script>
+        OAS_AD('Top5');
+    </script>
+  </div>
+
+    {% comment %}    
+		<div class="modal-content">
+      <SCRIPT language='JavaScript1.1' SRC="https://ad.doubleclick.net/ddm/adj/N5192.286338LABUSINESSJOURNAL/B11362540.151363497;sz=640x480;ord=17072401;dc_lat=;dc_rdid=;tag_for_child_directed_treatment=?">
+      </SCRIPT>
+      <NOSCRIPT>
+      <A HREF="https://ad.doubleclick.net/ddm/jump/N5192.286338LABUSINESSJOURNAL/B11362540.151363497;sz=640x480;ord=17072401?">
+      <IMG SRC="https://ad.doubleclick.net/ddm/ad/N5192.286338LABUSINESSJOURNAL/B11362540.151363497;sz=640x480;ord=17072401;dc_lat=;dc_rdid=;tag_for_child_directed_treatment=?" BORDER=0 WIDTH=640 HEIGHT=480 ALT="Advertisement"></A>
+      </NOSCRIPT>
+		</div>
+		{% endcomment %}
+		
+</div>

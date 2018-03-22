@@ -1,0 +1,223 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <title>Los Angeles Business Journal</title>
+    <meta property="og:title" content="">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="{{ STATIC_MEDIA_URL }}labj/v2/img/social-share.png?r=0.880068834638223">
+    <!--<meta property="og:url" content="http://localhost:2032"/>-->
+    <meta property="og:site_name" content="Los Angeles Business Journal">
+    <link rel="shortcut icon" href="{{ STATIC_MEDIA_URL }}labj/v2/img/favicon.ico?r=0.880068834638223">
+    <link rel="stylesheet" href="{{ STATIC_MEDIA_URL }}labj/v2/css/app.css">
+    <link rel="stylesheet" href="{{ STATIC_MEDIA_URL }}labj/v2/css/datajoe.css">
+    <!--<link rel="stylesheet" href="http://cdn.ink.sapo.pt/3.1.10/css/ink-flex.min.css">-->
+
+    <link href="https://fonts.googleapis.com/css?family=Cabin|Yrsa" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+
+
+
+    <script type="text/javascript">
+
+
+        OAS_url = 'http://oascentral.{{ site.domain }}/RealMedia/ads/';
+
+        //OAS_sitepage = window.location.hostname + window.location.pathname;
+
+        OAS_sitepage = '{% if 'labusinessjournal' in request.META.SERVER_NAME %}labusinessjournal{% endif %}{% if 'ocbj' in request.META.SERVER_NAME %}ocbj{% endif %}{% if 'sdbj' in request.META.SERVER_NAME %}sdbj{% endif %}{% if 'sfvbj' in request.META.SERVER_NAME %}sfvbj{% endif %}.www.clients.ellingtoncms.com/{% if 'labusinessjournal' in request.META.SERVER_NAME %}la{% endif %}{% if 'ocbj' in request.META.SERVER_NAME %}oc{% endif %}{% if 'sdbj' in request.META.SERVER_NAME %}sd{% endif %}{% if 'sfvbj' in request.META.SERVER_NAME %}sfv{% endif %}_homepage';
+
+        OAS_listpos = 'Top,TopRight,Middle,Middle1,Position1,Bottom,Frame1,Frame2,x92';
+
+        OAS_query = '';
+
+        OAS_target = '_top';
+
+        //end of configuration
+
+        OAS_version = 10;
+
+        OAS_rn = '001234567890'; OAS_rns = '1234567890';
+
+        OAS_rn = new String (Math.random()); OAS_rns = OAS_rn.substring (2, 11);
+
+        function OAS_NORMAL(pos) {
+
+            document.write('<A HREF="' + OAS_url + 'click_nx.ads/' + OAS_sitepage + '/1' + OAS_rns + '@' + OAS_listpos + '!' + pos + '?' + OAS_query + '" TARGET=' + OAS_target + '>');
+
+            document.write('<IMG SRC="' + OAS_url + 'adstream_nx.ads/' + OAS_sitepage + '/1' + OAS_rns + '@' + OAS_listpos + '!' + pos + '?' + OAS_query + '" BORDER=0></A>');
+
+        }
+
+        OAS_version = 11;
+
+        if (navigator.userAgent.indexOf('Mozilla/3') != -1 || navigator.userAgent.indexOf('Mozilla/4.0 WebTV') != -1)
+
+            OAS_version = 10;
+
+        if (OAS_version >= 11)
+
+            document.write('<SCR' + 'IPT LANGUAGE=JavaScript1.1 SRC="' + OAS_url + 'adstream_mjx.ads/' + OAS_sitepage + '/1' + OAS_rns + '@' + OAS_listpos + '?' + OAS_query + '"><\/SCRIPT>');
+
+
+        function OAS_AD(pos) {
+
+            if (OAS_version >= 11)
+
+                OAS_RICH(pos);
+
+            else
+
+                OAS_NORMAL(pos);
+
+        }
+
+
+    </script>
+
+
+</head>
+
+<body class="ink-grid">
+
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+
+    <header>
+        <div class="mobile-header hide-all show-small show-tiny">
+            <div class="mobile-branding">
+                <div class="nav-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <img src="{{ STATIC_MEDIA_URL }}labj/v2/img/logo-mobile.png?r=0.880068834638223" class="logo">
+            </div>
+            <div class="mobile-menu">
+                <div class="mobile-menu-in">
+                    <div class="subscribe-login">
+                        <ul class="menu top-nav horizontal column-group flex-item-even">
+                            <li>Subscribe</li>
+                            <li class="user-login"> <a href="javascript:void(0);"><i class="fa fa-user"></i>Login</a></li>
+                            <li class="top-search"> <a href="javascript:void(0);"><i class="fa fa-search" aria-hidden="true"></i> Search</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="mm-search">
+                        <div class="search-form">
+                            <div class="ico fa fa-search"></div>
+                            <input type="text" />
+                            <a href="#" class="close-search">&times;</a>
+                        </div>
+                    </div>
+                    <div class="mm-sections">
+                        <h4>Sections</h4>
+                        <ul class="mobile-ul">
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#">Lists</a></li>
+                            <li><a href="http://labusinessjournal.com/supplements/">Custom Content</a></li>
+                            <li><a href="#">Finance</a></li>
+                            <li><a href="#">Healthcare</a></li>
+                            <li><a href="#">Manufacturing</a></li>
+                            <li><a href="#">Real State</a></li>
+                            <li><a href="#">Services</a></li>
+                            <li><a href="#">Technology</a></li>
+                            <li><a href="#">Goverment</a></li>
+                            <li><a href="#">Travel/Leisure</a></li>
+                            <li><a href="http://labusinessjournal.com/bizevents/">Events</a></li>
+
+                        </ul>
+                    </div>
+                    <div class="mm-more">
+                        <h4>More LA Business Journal</h4>
+                        <ul class="mobile-ul">
+                            <li><a href="#">Subscribe</a></li>
+                            <!--
+                <li><a href="#">Advertise</a></li>
+                <li><a href="#">The List</a></li>
+                <li><a href="#">Resources</a></li>
+                <li><a href="#">About</a></li>
+                <li class="sep">|</li> -->
+
+                        </ul>
+                    </div>
+                    <div class="mm-footer">
+                        <div class="lbl">Follow Us</div>
+                        <div class="module-container column">
+                            <div class="module">
+                                <div class="module-content share-container">
+                                    <ul class="menu horizontal">
+                                        <!--  <li><img src="/img/LABJ_Subpage_social_fpo.png" alt=""></li> -->
+                                        <li class="fb"><a href="javascript:void(0);"><i class="fa fa-facebook-official" aria-hidden="true"></i></a></li>
+                                        <li class="tw"><a href="javascript:void(0);"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                                        <li class="li"><a href="javascript:void(0);"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+                                        <li class="em"><a href="javascript:void(0);"><i class="fa fa-envelope" aria-hidden="true"></i> </a> Get Email Alerts</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <nav class="ink-navigation all-100 hide-small hide-tiny" data-offset-top="0" data-activate-in-layouts="all">
+            <ul class="menu top-nav horizontal black all-100 hide-small hide-tiny">
+                <li class="has-sub pub-nav"><a href="#">Los Angeles Business Journal</a>
+                    <ul class="sub-menu">
+                        <li><a href="#">Item 1</a></li>
+                        <li><a href="#">Item 2</a></li>
+                        <li><a href="#">Item 3</a></li>
+                        <li><a href="#">Item 4</a></li>
+                    </ul>
+                </li>
+                <!-- <li class="sep"><span>|</span></li> -->
+                <div class="top-options push-right">
+                    <li><a href="#">Subscribe</a></li>
+                    <!--
+            <li><a href="#">Advertise</a></li>
+            <li><a href="#">The List</a></li>
+            <li><a href="#">Resources</a></li>
+            <li><a href="#">About</a></li>
+            <li class="sep">|</li> -->
+
+                    <!-- <li class="sep"><span>|</span></li>-->
+                    <li class="user-login"> <a href="javascript:void(0);"><i class="fa fa-user"></i>Login</a></li>
+                    <li class="top-search"> <a href="javascript:void(0);"><i class="fa fa-search" aria-hidden="true"></i> Search</a>
+                    </li>
+
+                </div>
+            </ul>
+            <div class="desktop-search">
+                <div class="search-form">
+                    <div class="ico fa fa-search"></div>
+                    <input type="text">
+                    <a href="#" class="close-search">&times;</a>
+                </div>
+            </div>
+        </nav>
+        <div class="main-logo top-contaniner align-center all-100 hide-small hide-tiny">
+            <img src="{{ STATIC_MEDIA_URL }}labj/v2/img/logo.png?r=0.880068834638223" class="logo">
+        </div>
+    </header>
+
+    <div class="mobile-date-subscribe-login hide-all show-small show-tiny">
+        <ul class="menu top-nav horizontal column-group flex-item-even">
+            <li class="date">Thurs, Oct 20, 2016</li>
+            <li><a href="#">Subscribe</a></li>
+            <li><a href="#">Login</a></li>
+        </ul>
+    </div>

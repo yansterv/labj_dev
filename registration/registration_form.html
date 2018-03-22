@@ -1,0 +1,37 @@
+{% extends "registration/registration_base.html" %}{% block title %}Create an Account{% endblock %}{% block content %}
+  <div class="content-container">
+    <div class="form-wrapper">
+      <p>Please fill in the form to receive our digital editions.</p>
+      <form action="" method="post">
+        {% csrf_token %}
+        <div class="form-error-message">{{ form.errors }}</div>
+        <div class="column-group half-gutters">
+          <div class="all-50 small-100 tiny-100">
+            <input type="text" name="first_name" value="" placeholder="First Name">
+          </div>
+          <div class="all-50 small-100 tiny-100">
+            <input type="text" name="last_name" value="" placeholder="Last Name">
+          </div>
+          <div class="all-100">
+            <input type="text" name="username" value="" placeholder="Username">
+          </div>
+          <div class="all-100">
+            <input type="text" name="email" value="" placeholder="Email">
+          </div>
+          <div class="all-100">
+            <input type="password" name="password1" value="" placeholder="Password">
+          </div>
+          <div class="all-100">
+            <input type="password" name="password2" value="" placeholder="Retype Password">
+          </div>
+          <div class="all-100">
+            {{ form.recaptcha_field }}
+          </div>
+          <div class="all-100">
+            <input type="submit" name="name" value="Sign Up"/>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock content %}

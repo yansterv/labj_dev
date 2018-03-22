@@ -1,0 +1,224 @@
+{% block extended_styles %}
+  <style type="text/css">
+    h4 {
+      padding:5px;
+      background-color:#F2F5F8;
+      margin-bottom:0;
+    }
+    h4#registered-user {
+      border:1px solid #ccc;
+    }
+    h4.accordion-header {
+      font-size:14px;
+      border:1px solid #ccc;
+    }
+    h4.accordion-header:hover {
+      cursor:pointer;
+    }
+    .accordion-box {
+      padding:5px;
+      margin-bottom:20px;
+      border-bottom:1px solid #ccc;
+      border-right:1px solid #ccc;
+      border-left:1px solid #ccc;
+    }
+    form.signin_form {
+      padding:10px;
+      border-bottom:1px solid #ccc;
+      margin-bottom:20px;
+      border-right:1px solid #ccc;
+      border-left:1px solid #ccc;
+    }
+    form p {
+      border:none;
+    }
+    form p:last-child {
+      padding-bottom:0;
+      margin-bottom:0;
+    }
+    .bottom-border {
+      border-bottom:1px solid #ccc;
+      margin-bottom:15px;
+    }
+    .bottom-border p {
+      font-weight:bold;
+    }
+  </style>
+{% endblock %}
+
+
+{% block extended_scripts %}
+  <script>
+    $(function() {
+      $( "#accordion" ).accordion({ active: false, autoHeight: false });
+    });
+  </script>
+{% endblock %}
+
+{% if ESP_ACCOUNT_NUMBER %}
+  {% ifequal ESP_ERROR INCORRECT_USER %}
+  <h4>Subscription Account Login Error</h4>
+    <p>
+      Your subscription account number is being rejected. Please confirm your subscription account number and re-enter it by clicking <a href="{% url 'profiles_edit_profile' %}">here</a>. If you do not know your subscription account number you can retrieve it <a href="https://www.pubservice.com/PasswordHelp.aspx?PC={% if 'labusinessjournal' in request.META.HTTP_HOST %}LA{% endif %}{% if 'ocbj' in request.META.HTTP_HOST %}OC{% endif %}{% if 'sdbj' in request.META.HTTP_HOST %}SD{% endif %}{% if 'sfvbj' in request.META.HTTP_HOST %}SF{% endif %}">here</a>
+  {% endifequal %}
+    </p>
+  {% ifequal ESP_ERROR INCORRECT_PASSWORD %}
+    <h4>Subscription Account Login Error</h4>
+    <p>
+      Your subscription account password is being rejected. It is typically the same as your zip code. Please confirm your subscription account password and re-enter it by clicking <a href="{% url 'profiles_edit_profile' %}">here</a>. If you do not know your subscription account password you can retrieve it <a href="https://www.pubservice.com/PasswordHelp.aspx?PC={% if 'labusinessjournal' in request.META.HTTP_HOST %}LA{% endif %}{% if 'ocbj' in request.META.HTTP_HOST %}OC{% endif %}{% if 'sdbj' in request.META.HTTP_HOST %}SD{% endif %}{% if 'sfvbj' in request.META.HTTP_HOST %}SF{% endif %}">here</a>   
+    </p>
+  {% endifequal %}
+
+  {% ifequal ESP_ERROR SUBSCRIPTION_EXPIRED %}
+    <h4>Subscription Account Login Error</h4>
+    <p>
+    Your print subscription has expired. Please renew your subscription by <a href="https://www.pubservice.com/subrenew.aspx?PC={% if 'labusinessjournal' in request.META.HTTP_HOST %}LA{% endif %}{% if 'ocbj' in request.META.HTTP_HOST %}OC{% endif %}{% if 'sdbj' in request.META.HTTP_HOST %}SD{% endif %}{% if 'sfvbj' in request.META.HTTP_HOST %}SF{% endif %}&FC=UNITED+STATES">clicking here</a> then updting your subscription account information in your <a href="{% url 'profiles_edit_profile' %}">user profile</a>.
+    </p>
+  {% endifequal %}
+
+  {% ifequal ESP_ERROR UNKNOWN_AUTH_BACKEND_ERROR %}  
+    <h4>Subscription Account Login Error</h4>
+    <p>
+      An unknown error has been encountered with your auth info - please contact Customer Service for further assistance.
+    </p>
+  {% endifequal %}
+{% endif %}
+<div class="bottom-border">
+  <p>
+    {{ site.domain|upper }} requires a paid subscription. If you have a paid subscription linked to your {{ site.domain|upper }} account please log in below. Otherwise click the link that matches your situation.</p>
+  </p>
+</div>
+<h4 id="registered-user">Registered Users Log In</h4>
+<div id="login">
+  {% if form.errors %}
+    <div class="message message_error">
+      <h4>Please correct the errors below</h4>
+      {% if form.non_field_errors %}<p>{{ form.non_field_errors }}</p>{% endif %}
+    </div>
+  {% endif %}
+  <form action="/accounts/login/" method="post" class="signin_form form_toggle">{% csrf_token %}
+    <p>
+      <label for="id_username">Username</label> <input id="id_username" type="text" name="username" maxlength="30" />
+    </p>
+      <p>
+        <label for="id_password">Password</label> <input type="password" name="password" id="id_password" />
+        <br>
+        Forgot password? <a href="/accounts/password/reset/"><small>Click Here</small></a>
+      </p>
+
+      <input type="hidden" name="next" value="/accounts/profile/">
+      <p><button type="submit">Sign in</button></p>
+  </form>
+</div>
+<div id="accordion">
+  <h4 class="accordion-header">I don't know my login information or I don't know if I have an account on {{ site.domain }}</h4>
+  <div class="accordion-box">
+    <p>If you don't know know your login information for {{ site.domain|upper }} you may receive your username and the opportunity to reset your password by clicking "Lost Password" below. You will need to know the email address you used to register. If you don't remember the email address you used, call customer service at:</p>
+    {% if 'labusinessjournal' in request.META.HTTP_HOST or 'sfvbj' in request.META.HTTP_HOST %}
+      <ul>
+        <li>Phone: 1-323-549-5225 during normal business hours</li>
+        <li>Fax: 1-323-549-5255</li>
+        <li>Email: circulation1@labusinessjournal.com</li>
+      </ul>
+    {% endif %}
+    {% if 'ocbj' in request.META.HTTP_HOST %}
+      <ul>
+        <li>Phone: 1-949-833-8373 during normal business hours</li>
+        <li>Fax: 1-949-833-8751</li>
+        <li>Email: cox@ocbj.com</li>
+      </ul>
+    {% endif %}
+    {% if 'sdbj' in request.META.HTTP_HOST %}
+      <ul>
+        <li>Phone: 1-858-277-6391 during normal business hours</li>
+        <li>Fax: 1-858-277-6398</li>
+        <li>Email: smsnyder@sdbj.com</li>
+      </ul>
+    {% endif %}
+    <p>
+      <a href="/accounts/password/reset/"><strong>Lost Password</strong></a>
+    </p>
+  </div>
+  <h4 class="accordion-header">I don't have an account on {{ site.domain }} or a subscription</h4>
+  <div class="accordion-box">
+    <p>
+      You must have both an {{ site.domain|upper }} account and a paid subscription account number and zip code to view the content on this website.
+    </p>
+    <ol>
+      <li>
+        To create an {{ site.domain|upper }} account click <a href="/accounts/register/"><strong>Create Account</strong></a> and follow the prompts. You will receive a confirmation email that needs to be clicked to activate your account.
+      </li>
+      <li>To pay for a subscription to the print edition and access to {{ site.domain|upper }} <a href="https://www.pubservice.com/subnew.aspx?PC={% if 'labusinessjournal' in request.META.HTTP_HOST %}LA{% endif %}{% if 'ocbj' in request.META.HTTP_HOST %}OC{% endif %}{% if 'sdbj' in request.META.HTTP_HOST %}SD{% endif %}{% if 'sfvbj' in request.META.HTTP_HOST %}SF{% endif %}&FC=UNITED+STATES"><strong>Click Here</strong></a>. You will be returned to {{ site.domain|upper }} where you may log in using your information from Step 1 above. Once you have logged in, click "Create/Edit Your Subscription Account" to enter your subscription information.</p>
+  </div>
+  <h4 class="accordion-header">I know my login information but not my subscription number</h4>
+  <div class="accordion-box">
+    <p>
+      To view {{ site.domain }} content you must have a paid subscription linked to your {{ site.domain }} account. When you have your subscription account number and zip code, log in at "Registered Users Log In" above and click "Create/Edit Your Subscription Account" to enter your information.
+      <br><br>
+      There are three ways to obtain your subscription account number and zip code:
+    </p>
+    <ol>
+      <li>
+        Copy the subscription account number and 5 digit zip code from the address label area of your print edition. <strong>The account number requires 2 alpha digits and 6 numeric digits.</strong>
+        <img src="{{ STATIC_MEDIA_URL }}cbj/images/cbj_mailing_label.gif">
+      </li>
+      <li>
+        Click <a href="https://www.pubservice.com/PasswordHelp.aspx?PC={% if 'labusinessjournal' in request.META.HTTP_HOST %}LA{% endif %}{% if 'ocbj' in request.META.HTTP_HOST %}OC{% endif %}{% if 'sdbj' in request.META.HTTP_HOST %}SD{% endif %}{% if 'sfvbj' in request.META.HTTP_HOST %}SF{% endif %}&FC=UNITED+STATES"><strong>Retrieve Subscription Account Information</strong></a>, enter the email address associated with your subscription account and your subscription account number and zip code will be emailed to you.
+      </li>
+      <li>
+        Contact Customer Service at:
+        {% if 'labusinessjournal' in request.META.HTTP_HOST or 'sfvbj' in request.META.HTTP_HOST %}
+          <ul>
+            <li>Phone: 1-323-549-5225 during normal business hours</li>
+            <li>Fax: 1-323-549-5255</li>
+            <li>Email: circulation1@labusinessjournal.com</li>
+          </ul>
+        {% endif %}
+        {% if 'ocbj' in request.META.HTTP_HOST %}
+          <ul>
+            <li>Phone: 1-949-833-8373 during normal business hours</li>
+            <li>Fax: 1-949-833-8751</li>
+            <li>Email: cox@ocbj.com</li>
+          </ul>
+        {% endif %}
+        {% if 'sdbj' in request.META.HTTP_HOST %}
+          <ul>
+            <li>Phone: 1-858-277-6391 during normal business hours</li>
+            <li>Fax: 1-858-277-6398</li>
+            <li>Email: smsnyder@sdbj.com</li>
+          </ul>
+        {% endif %}
+      </li>
+    </ol>
+  </div>
+  <h4 class="accordion-header">I know my login information and my subscription number</h4>
+  <div class="accordion-box">
+    <p>
+      If you already know your {{ site.domain|upper }} login information and your subscription account number and zip code:
+    </p>
+    <ol>
+      <li>
+        Log in at "Registered User Log In" above
+      </li>
+      <li>
+        Click "Create/Edit Your Subscription Account" to link your subscription account number and zip code to your {{ site.domain|upper }} account.
+      </li>
+    </ol>
+  </div>
+</div>
+{% comment %}
+<h4>Purchase just this article?</h4>
+<div>
+  <p>To Search the Archives, and Purchase this Articles Please Click "Buy" Below</p>
+  <form method="POST" action="{{ PAYPAL_FORM_URL }}">
+    <input type="hidden" name="LOGIN" value="{{ PAYPAL_LOGIN_ID }}">
+    <input type="hidden" name="PARTNER" value="{{ PAYPAL_PARTNER_ID }}">
+    <input type="hidden" name="TYPE" value="S">
+    <input type="hidden" name="AMOUNT" value="{{ ITEM_COST }}">
+    <input type="hidden" name="CUSTID" value="{{ CUSTID }}">
+    <input type="hidden" name="COMMENT1" value="{{ COMMENT1 }}">
+    <input type="hidden" name="USER1" value="{{ USER1 }}">
+    <input type="submit" value="Buy">
+  </form>
+</div>
+{% endcomment %}

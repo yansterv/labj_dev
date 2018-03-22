@@ -1,0 +1,74 @@
+{% extends "search/base_search.html" %}
+{% block body_class %}{{ block.super }} advanced_search{% endblock %}
+{% block content %}
+{% load dictutil humanize content search mogrify delta anonymity %}{% exclude_from_dict request.GET "page","search_type","start_date" as page_query_string %}
+{% exclude_from_dict request.GET "sortby" as sortby_query_string %}{% if query %}
+<div class="date_ranges">
+    <ul>
+        <li{% if search_type == "past_24" %} class="on"{% endif %}><a href="?{{ page_query_string.urlencode }}&amp;search_type=past_24">Past 24 hours</a></li>
+        <li{% if search_type == "past_week" %} class="on"{% endif %}><a href="?{{ page_query_string.urlencode }}&amp;search_type=past_week">Past week</a></li>
+        <li{% if search_type == "past_month" %} class="on"{% endif %}><a href="?{{ page_query_string.urlencode }}&amp;search_type=past_month">Past month</a></li>
+        <li{% if search_type == "past_six_months" %} class="on"{% endif %}><a href="?{{ page_query_string.urlencode }}&amp;search_type=past_six_months">Past six months</a></li>
+        <li{% if search_type == "past_year" %} class="on"{% endif %}><a href="?{{ page_query_string.urlencode }}&amp;search_type=past_year">Past year</a></li>
+        <li{% if search_type == "all_results" %} class="on"{% endif %}><a href="?{{ page_query_string.urlencode }}&amp;search_type=all_results">Any time</a></li>
+    </ul>
+</div>{% if recommended %}
+<div class="recommended">
+    <h4>Recommended results</h4>
+    <ul>
+        {% for item in recommended %}
+        <li><a href="{{ item.url }}">{{ item.title }}</a></li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}{% if timeless_models %}
+<!--
+<div class="recommended">
+    <h4>Sections and Blog Groups</h4>
+    <ul>
+        {% for item in timeless_models %}
+        {% if item.content_type == 'weblogs.group' %}
+        <li><a href="{{ item.object.get_absolute_url }}">{{ item.object.name }}</a></li>
+        {% else %}
+        <li><a href="{{ item.object.get_absolute_url }}">{{ item.object.title }}</a></li>
+        {% endif %}
+        {% endfor %}
+    </ul>
+</div>
+-->
+{% endif %}{% if whitelist or blacklist or misc.results %}
+<div class="vertical_list">
+    {% for model_search in whitelist %}
+    <div class="panel">
+        <h2 class="title"><a href="{% url 'ellington_search_vertical' content_type=model_search.content_type %}?q={{ query }}">{{ model_search.verbose_name_plural }}</a>
+            <small><a href="{% url 'ellington_search_vertical' content_type=model_search.content_type %}?q={{ query }}">{{ model_search.results|slice:"3"|length }} result{{ model_search.total_count|pluralize }} of {{ model_search.total_count|intcomma }}</a></small></h2>
+        <div class="list story_list" id="type_{{ model_search.verbose_name_plural|slugify }}">
+            {% for result in model_search.results|slice:"3" %}
+            {% render_template_for result.object in "includes/lists" %}
+            {% endfor %}            {% if model_search.results|slice:"3"|length %}
+            <p class="more"><a href="{% url 'ellington_search_vertical' content_type=model_search.content_type %}?q={{ query }}">More {{ model_search.verbose_name_plural }}</a></p>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+    {% if misc.results %}
+    <div class="misc">
+        <h2><a href="{% url 'ellington_search_basic' %}?q={{ query }}">Other results</a></h2>
+        <div class="list">
+            {% for result in misc.results %}
+            <h3 class="content_type"><a href="/search/vertical/{{ result.content_type }}/?{{ page_query_string.urlencode }}">{{ result.verbose_name }}</a></h3>
+            {% render_template_for result.object in "includes/lists" %}
+            {% endfor %}            {% if misc.more_count %}
+            <p class="more"><a href="{% url 'ellington_search_basic' %}?q={{ query }}">See combined results</a></p>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}</div>
+{% else %}
+<div class="message message_info">
+    <h4>Your search did not match any documents.</h4>
+    <p>Make sure all words are spelled correctly, try different keywords, or try using more general keywords.</p>
+</div>
+{% endif %}<p class="search_alert"><a href="/searchalerts/create/?query={{ query }}">Create search alert</a> for "{{ query }}"</p>
+{% endif %}
+{% endblock %}

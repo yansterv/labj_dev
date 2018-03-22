@@ -1,0 +1,14 @@
+{% load pagination %}
+{% if has_next or has_previous %}
+<p class="pagination">
+    {% if has_previous %}<a class="previous" href="?page={{ previous }}{{ request|preserve_get }}">Prev</a>{% else %}<span class="previous">Prev</span>{% endif %}
+    {% if has_next %}<a class="next" href="?page={{ next }}{{ request|preserve_get }}">Next</a>{% else %}<span class="next">Next</span>{% endif %}
+</p>
+{% else %}
+{% if page.has_next or page.has_previous %}
+<p class="pagination">
+    {% if page.has_previous %}<a class="previous" href="?page={{ page.previous_page_number }}{{ request|preserve_get }}">Prev</a>{% else %}<span class="previous">Prev</span>{% endif %}
+    {% if page.has_next %}<a class="next" href="?page={{ page.next_page_number }}{{ request|preserve_get }}">Next</a>{% else %}<span class="next">Next</span>{% endif %}
+</p>
+{% endif %}
+{% endif %}

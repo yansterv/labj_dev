@@ -1,0 +1,192 @@
+{% load sectionfronts mogrify listutil %}
+
+
+
+{% get_section_front for section.url as sfront %}
+
+
+
+<html>
+
+  <head></head>
+
+  <body link="#3d7cb1" vlink="#3d7cb1" style="padding: 10px; background-color:#eee;">
+
+    <div id="newsletter" style="margin:0 auto; width: 750px; padding: 25px 30px; background-color: #fff;">
+
+      <table id="header" cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 10px; padding-bottom: 10px; width: 750px; border-bottom: 1px solid #eee;">
+
+         <tr><td valign="bottom">         
+
+            <p style="margin: 0; font-size: 15px; color: #666;">Get the latest LA business news, <a href="http://www.labusinessjournal.com/store">subscribe now</a> </p>
+
+          </td>
+
+          <td align="right" valign="bottom"> 
+
+          <!-- Section Title code goes here 
+
+            <h2 style="margin: 0; font-size: 15px; color: #555;">{% block page_title %}{% if section.title %}{{ section.title }}{% else %}Email{% endif %} {% endblock %}</h2> 
+
+            -->
+
+          </td>
+
+        </tr>
+
+                <tr><td colspan="2" align="center" > <br>
+
+		<a href="http://www.labusinessjournal.com"><img src="http://ocbj.media.clients.ellingtoncms.com/static/labj/images/labj_logonew.gif" border="0"> </a>
+
+		</td></tr>
+
+      </table>
+
+
+
+      <table id="content" cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 10px; padding-bottom: 10px; width: 750px; border-bottom: 1px solid #eee; font-size: 14px; line-height: 18px;">
+
+       <tr><td colspan="2">
+
+              
+
+  <A HREF="http://oascnx06028.247realmedia.com/RealMedia/ads/click_nx.ads/labusinessjournal.www.clients.ellingtoncms.com/la_homepage/16725471@Top2,Middle2,Middle3,Bottom2,x01!Top2">
+
+<IMG SRC="http://oascnx06028.247realmedia.com/RealMedia/ads/adstream_nx.ads/labusinessjournal.www.clients.ellingtoncms.com/la_homepage/16725471@Top2,Middle2,Middle3,Bottom2,x01!Top2" border="0"></A>
+
+		  <hr> 
+
+		  
+
+	   </td></tr>
+
+	    <tr>
+
+          <td valign="top" style="padding-right: 40px;">
+
+		 <p style="margin-bottom: 0; margin-top: 5px;  color: #666; font-size: 15px; padding: 0;"><em>Click on a headline below for the full story </em></p>
+
+		 <p>
+
+            {% if sfront.lead_stories %}
+
+              {% for story in sfront.lead_stories %}
+
+                <div style="margin-bottom: 20px;">
+
+				<p><br><h3 style="margin: 0; font-size: 18px; padding: 0;"><a href="http://{{ site.domain }}{{ story.get_absolute_url }}">{{ story.headline }}</a></h3></p>
+
+                  <p style="margin-bottom: 0; margin-top: 5px; padding: 0;">{{ story.tease|safe }}</p>  
+
+                  <p style="margin-bottom: 0; margin-top: 5px; padding: 0;"><small style="color: #999;">{{ story.pub_date|date }}</small></p>
+
+                </div>
+
+              {% endfor %}
+
+            {% endif %}
+
+
+
+            {% exclude_from_list story_list sfront.lead_stories as story_list %}
+
+
+
+            {% for story in story_list %}
+
+              <div style="margin-bottom: 20px;">
+
+                <h3 style="margin: 0; font-size: 18px; padding: 0;"><a href="http://{{ site.domain }}{{ story.get_absolute_url }}">{{ story.headline }}</a></h3>
+
+                <p style="margin-bottom: 0; margin-top: 5px; padding: 0;">{{ story.tease|safe }}</p>
+
+                <p style="margin-bottom: 0; margin-top: 5px; padding: 0;"><small style="color: #999;">{{ story.pub_date|date }}</small></p>
+
+              </div>
+
+            {% endfor %}
+
+			</p>
+
+          </td>
+
+          <td align="center" valign="top" style="width: 300px;">
+
+            <p style="margin: 0; font-size: 13px; text-transform: uppercase; color: #999;"><small></small></p>
+
+            <div style="width: 300px; height: 250px; background: #FFF;">
+
+              <!-- Ad invocation code goes here -->
+
+                <A HREF="http://oascnx06028.247realmedia.com/RealMedia/ads/click_nx.ads/labusinessjournal.www.clients.ellingtoncms.com/la_homepage/19129632@Top2,Middle2,Middle3,Bottom2,x01!Middle2">
+
+                <IMG SRC="http://oascnx06028.247realmedia.com/RealMedia/ads/adstream_nx.ads/labusinessjournal.www.clients.ellingtoncms.com/la_homepage/19129632@Top2,Middle2,Middle3,Bottom2,x01!Middle2" border="0"></A>
+
+                </div>
+
+                <hr>
+
+                <div style="width: 300px; height: 250px; background: #FFF;">
+
+                <A HREF="http://oascnx06028.247realmedia.com/RealMedia/ads/click_nx.ads/labusinessjournal.www.clients.ellingtoncms.com/la_homepage/17835601@Top2,Middle2,Middle3,Bottom2,x01!Middle3">
+
+<IMG SRC="http://oascnx06028.247realmedia.com/RealMedia/ads/adstream_nx.ads/labusinessjournal.www.clients.ellingtoncms.com/la_homepage/17835601@Top2,Middle2,Middle3,Bottom2,x01!Middle3" border="0"></A>
+
+            </div>
+
+          </td>
+
+        </tr>
+
+		<tr><td colspan="2">
+
+		<hr>
+
+		      <!-- Ad invocation code goes here -->
+
+                <A HREF="http://oascnx06028.247realmedia.com/RealMedia/ads/click_nx.ads/labusinessjournal.www.clients.ellingtoncms.com/la_homepage/19181504@Top2,Middle2,Middle3,Bottom2,x01!Bottom2">
+
+                <IMG SRC="http://oascnx06028.247realmedia.com/RealMedia/ads/adstream_nx.ads/labusinessjournal.www.clients.ellingtoncms.com/la_homepage/19181504@Top2,Middle2,Middle3,Bottom2,x01!Bottom2" border="0"></A>
+
+  
+
+		      <!-- Tracking .gif code goes here -->
+
+              <A HREF="http://oascnx06028.247realmedia.com/RealMedia/ads/click_nx.ads/labusinessjournal.www.clients.ellingtoncms.com/la_homepage/11694321@Top2,Middle2,Middle3,Bottom2,x01!x01">
+
+			  <IMG SRC="http://oascnx06028.247realmedia.com/RealMedia/ads/adstream_nx.ads/labusinessjournal.www.clients.ellingtoncms.com/la_homepage/11694321@Top2,Middle2,Middle3,Bottom2,x01!x01"  border="0"></A>
+
+  </div> 
+
+		</td></tr>
+
+      </table>
+
+
+
+      <div id="footer" style="font-size: 13px; line-height: 15px; color: #999;">
+
+Los Angeles Business Journal | 5700 Wilshire Blvd. | Los Angeles, CA 90036 | (323) 549-5225 | Copyright © 2010. All Rights Reserved.
+
+        <p style="margin-top: 10px; margin-bottom: 0; padding: 0;">
+
+          <small>
+
+You're receiving this e-mail because you subscribed</a> to a {{ site.name }} e-mail edition. 
+
+<br><a href="mailto:circulation1@labusinessjournal.com?SUBJECT=Unsubscribe From {% block footer_title %}{% if section.title %}{{ section.title }}{% else %}Email{% endif %}{% endblock %}">
+
+Unsubscribe</a> from this eNewsletter </font>
+
+          </small>
+
+        </p>
+
+      </div>
+
+    </div>
+
+  </body>
+
+</html>
+

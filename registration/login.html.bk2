@@ -1,0 +1,244 @@
+{% extends "base_generic.html" %}
+
+{% block title %}Sign in to {{ site_name }}{% endblock %}
+{% block body_class %}login{% endblock %}
+
+
+{% block extended_styles %}
+  {{ block.super }}
+  <style type="text/css">
+    #main {
+      background:none;
+    }
+    #content {
+      width:918px;
+    }
+    .free-access {
+      color:#666666;
+      font-weight:normal;
+    }
+    h4.free-access span {
+      color:#C00000;
+    }
+    h4 {
+      padding:5px;
+      background-color:#F2F5F8;
+      margin-bottom:0;
+    }
+    h4#registered-user {
+      border:1px solid #ccc;
+    }
+    h4.accordion-header {
+      font-size:22px;
+      border:1px solid #ccc;
+    }
+    h4.accordion-header:hover {
+      cursor:pointer;
+    }
+    .accordion-box {
+      padding:5px;
+      margin-bottom:20px;
+      border-bottom:1px solid #ccc;
+      border-right:1px solid #ccc;
+      border-left:1px solid #ccc;
+      overflow:hidden;
+    }
+    #login {
+      border-bottom:1px solid #ccc;
+      border-right:1px solid #ccc;
+      border-left:1px solid #ccc;
+      overflow:hidden;
+      padding:10px;
+    }
+    form.signin_form, form.reg_form {
+      margin-bottom:20px;
+      float:left;
+      width:350px;
+      border:1px solid #ccc;
+      border-radius:10px;
+      -moz-border-radius:10px;
+      height:250px;
+    }
+    form.signin_form {
+      margin:0 30px 0 10px;
+    }
+    form p {
+      border:none;
+      padding:0 10px;
+    }
+    form p:last-child {
+      padding-bottom:0;
+      margin-bottom:0;
+    }
+    p.form-header {
+      color:#1259be;
+      font-size:18px;
+      font-weight:bold;
+      width:340px;
+      /* background:url(http://ocbj.media.clients.ellingtoncms.com/static/cbj/images/bg-login-box.png) repeat-x */
+      background-image:-moz-linear-gradient(0% 100% 90deg,#f3f9ff, #cfe3f6);
+      background-image:-webkit-gradient(linear, 0% 100%, 0% 0%, from(#f3f9ff), to(#cfe3f6));
+      background-color:#cfe3f6;
+      -webkit-border-top-left-radius: 10px;
+      -webkit-border-top-right-radius: 10px;
+      -moz-border-radius-topleft: 10px;
+      -moz-border-radius-topright: 10px;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      padding:5px;
+      border-bottom:1px solid #ccc;
+    }
+    p.box-header {
+      color:#E24232;
+      font-size:18px;
+      font-weight:bold;
+      background-image:-moz-linear-gradient(0% 100% 90deg,#fefcf3, #f6eecf);
+      background-image:-webkit-gradient(linear, 0% 100%, 0% 0%, from(#fefcf3), to(#f6eecf));
+      background-color:#fefcf3;
+      -webkit-border-top-left-radius: 10px;
+      -webkit-border-top-right-radius: 10px;
+      -moz-border-radius-topleft: 10px;
+      -moz-border-radius-topright: 10px;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      padding:5px;
+      border-bottom:1px solid #ccc;
+    }
+    .bottom-border {
+      border-bottom:1px solid #ccc;
+      margin-bottom:15px;
+    }
+    .bottom-border p {
+      font-weight:bold;
+    }
+    .login-helper-text {
+      color:#C00000;
+      font-weight:bold;
+    }
+    span.smaller {
+      font-size:20px;
+      color:#777;
+    }
+    .already {
+      color:#1259be;
+    }
+    .not-yet {
+      color:#E24232;
+      margin-top:10px;
+    }
+    .forgot {
+      color:#808080;
+      text-align:right;
+      font-weight:bold;
+    }
+    .new {
+      color:#808080;
+    }
+    #submit-button {
+      background:url(http://ocbj.media.clients.ellingtoncms.com/static/cbj/images/btn-login.png); 
+      width:101px;
+      height:25px;
+      text-indent:-9999px;
+      border:0;
+    }
+    #register-button {
+      background:url(http://ocbj.media.clients.ellingtoncms.com/static/cbj/images/btn-register.png); 
+      width:100px;
+      height:25px;
+      text-indent:-9999px;
+      border:0;
+    }
+    .subscribe {
+      margin:10px;
+      float:left;
+      width:330px;
+      border:1px solid #ccc;
+      border-radius:10px;
+      -moz-border-radius:10px;
+      height:200px;    
+    }
+    .subscribe p {
+      color:#E24232;
+      padding:10px;
+    }
+  </style>
+{% endblock %}
+
+
+{% block extended_scripts %}
+  {{ block.super }}
+  <script>
+    $(function() {
+      $( "#accordion" ).accordion({ collapsible: true, active: 0, autoHeight: false });
+    });
+  </script>
+{% endblock %}
+
+
+{% block content_title %}
+  <h2>Sign in</h2>
+{% endblock %}
+
+
+{% block content %}
+  {% if request.GET.m == 'na' %}
+    <h3>An account on {{ site.name }} is required for access to the digital edition</h3>
+    <p class="login-helper-text">To create an account please click the "Register" button below right and start with Step 2</p>
+  {% else %}
+    <h3>User Account Login - <span class="smaller">Print subscribers get FREE access to all {% if 'labusinessjournal' in request.META.SERVER_NAME %}LA{% endif %}{% if 'ocbj' in request.META.SERVER_NAME %}OC{% endif %}{% if 'sdbj' in request.META.SERVER_NAME %}SD{% endif %}{% if 'sfvbj' in request.META.SERVER_NAME %}SFV{% endif %} Business Journal content</span></h3>
+    <p class="login-helper-text">To start reading the Journal online, please indicate your subscriber status:</p>
+  {% endif %}
+  <div id="accordion">
+    <h4 class="accordion-header already">ALREADY A SUBSCRIBER?</h4>
+    <div id="login">
+      <p class="login-helper-text">
+        Please login. If you don't recall your user account or password you can look it up with your email address (see link below*).  <br>If you don't have a user account, you'll need to Register (right button).
+      </p>
+      {% if form.errors %}
+        <div class="message message_error">
+          <h4>Please correct the errors below</h4>
+          {% if form.non_field_errors %}<p>{{ form.non_field_errors }}</p>{% endif %}
+        </div>
+      {% endif %}
+      <form action="/accounts/login/" method="post" class="signin_form">{% csrf_token %}
+        <p class="form-header">User account login/lookup</p>
+        <p>
+          <label for="id_username">Username</label> <input id="id_username" type="text" name="username" maxlength="30" />
+        </p>
+          <p>
+            <label for="id_password">Password</label> <input type="password" name="password" id="id_password" />
+          </p>
+	  <input type="hidden" name="next" value="{{ next }}">
+          <p>
+            <button type="submit" id="submit-button">Sign in</button>
+          </p>
+          <p class="forgot">
+            Forgotten your password or username?<br>
+            <a href="/accounts/password/reset/">*Look it up with your email >></a>
+          </p>
+      </form>
+      <form action="/accounts/login/" method="post" class="reg_form">
+        <p class="form-header">Register for a user account</p>
+        <p class="new">
+          A user account is required for access to news content. Click below if you need to set up a new account.
+        </p>
+        <p><a href="/accounts/register/?type=existing"><img src="{{ STATIC_MEDIA_URL }}cbj/images/btn-register.png"></a></p>
+      </form>
+    </div>
+    <h4 class="accordion-header not-yet">NOT YET A SUBSCRIBER?</h4>
+    <div class="accordion-box">
+      <div class="subscribe">
+        <p class="box-header">Register for a user account</p>
+        <p>
+          See the benefits of subscribing today, plus we'll check to see if you've registered with us before.
+        </p>
+        <p><a href="/accounts/register/?type=new"><img src="{{ STATIC_MEDIA_URL }}cbj/images/btn-start.png"></a></p>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+
+{% block sidebar_wrapper %}
+  {% block sidebar %}{% endblock %}
+{% endblock %}

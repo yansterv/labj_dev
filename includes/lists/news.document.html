@@ -1,0 +1,23 @@
+{% extends "includes/lists/default.html" %}
+
+
+{% block item_class %}news_document{% endblock %}
+
+
+{% block item %}
+{% load mailfriend permissions %}
+<div class="article-list-item">
+    <div class="info">
+        <h4><a href="{{ object.get_absolute_url }}">{{ object.title }}</a></h4>
+        {% if object.description %}<p>{{ object.description }}</p>{% endif %}
+        <ul class="footer">
+            <li><a href="{% mailfriend_link for object %}" rel="popup(600x650)">Share</a></li>
+            <li><a href="{{ object.get_absolute_url }}#comments">Discuss</a></li>
+            <li>{{ object.pub_date|date }}</li>
+            {% if user|can_change:object %}
+            <li><a href="/admin/news/document/{{ object.id }}/" class="admin_link">edit</a></li>
+            {% endif %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "registration/base_user.html" %}
+{% block title %}Your relationships{% endblock %}
+{% block body_class %}{{ block.super }} user_relationships{% endblock %}
+{% block content_title_wrapper %}{% endblock %}
+{% block content %}
+{% load listutil mogrify content %}{% merge_lists friends by "creation_date" contacts by "creation_date" as following %}{% if not following and not fans %}
+<div class="message message_info">
+    <h4>You currently haven't made any friends here.</h4>
+    <p>To start following another user, click on their username to get to their profile page, and then click "Start following."</p>
+    <p>If you follow someone, you're a fan. If they follow you back, you're listed as friends.</p>
+</div>
+{% endif %}<section>
+    <h3>Following</h3>
+    {% if following %}
+    <div class="list">
+        {% for relationship in following %}
+        {% render_template_for relationship.to_user in "includes/lists" %}
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="message message_info">
+        <h4>You currently don't have any contacts.</h4>
+        <p>Find your friends and start following them.</p>
+    </div>
+    {% endif %}
+</section><section>
+    <h3>Fans</h3>
+    {% if fans %}
+    <div class="list">
+        {% for relationship in fans %}
+        {% render_template_for relationship.from_user in "includes/lists" %}
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="message message_info">
+        <h4>You currently don't have any fans.</h4>
+        <p>Fans are people that you don't follow, but follow you.</p>
+    </div>
+    {% endif %}
+</section>
+{% endblock %}

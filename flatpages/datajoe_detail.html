@@ -1,0 +1,254 @@
+{% extends "includes/v2/layout-two-col.html" %}
+
+{% load datajoe_tags %}
+
+{% block extended_scripts %}
+
+<style>
+
+#projects {
+
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+
+    border-collapse: collapse;
+
+    width: 100%;
+
+}
+
+
+
+#projects td, #projects th {
+
+    border: 1px solid #ddd;
+
+    padding: 8px;
+
+    cursor: pointer;
+
+}
+
+
+
+#projects tr:nth-child(even){background-color: #f2f2f2;}
+
+
+
+#projects tr:hover {background-color: #ddd;}
+
+
+
+#projects th {
+
+    padding-top: 12px;
+
+    padding-bottom: 12px;
+
+    text-align: left;
+
+    background-color: #004b85;
+
+    color: white;
+
+}
+
+</style>
+
+{% endblock %}
+
+
+
+{% block title %}{{ flatpage.title }}{% endblock %}
+
+{% block body_class %}flatpage_default{% endblock %}
+
+{% block body_id %}flatpage_{{ flatpage.id }}{% endblock %}
+
+
+
+
+
+{% block feed_link %}
+
+  {% load content %}
+
+  <link type="application/rss+xml" rel="alternate" href="/rss/comments/objects/{{ flatpage|content_type_id }}/{{ flatpage.pk }}/" data-hello="1">
+
+{% endblock %}
+
+
+
+{% block sidebar%}{% endblock %}
+
+
+
+{% block content_title %}
+
+  <h1>Lawfirms</h1>
+
+{% endblock %}
+
+
+
+{% block content %}
+
+  {% load markup banned comments %}
+
+  {{ flatpage.content|markdown }}
+
+  {% comment %}{{ lols }}{% endcomment %}
+
+{% if request.GET.id %}
+
+ {% comment %}{% get_datajoe_project_detail request.GET.id as lol %}{% endcomment %}
+
+ {% get_datajoe_project_records request.GET.id 1 as lols %}
+
+
+
+<table id="projects">
+
+  <tr>
+
+    <th>Firm<br /><div style="font-size:10px"> -name<br /> -address<br /> -website</div></th>
+
+    <th>LA County Attorneys<br /><div style="font-size:10px"> -total<br/> -partners<br />(current/last year)</div></th>
+
+    <th>Financials<br /><div style="font-size:10px"> -revenue<br /> -profits/partner (2016/2015)<br />($ in millions)</div></th>
+
+    <th>Practice Areas<br /><div style="font-size:10px">(partial list)</div></th>
+
+    <th>Offices<br /><div style="font-size:10px"> -year founded in L.A.<br /> -no. offices<br />(total/L.A.)</div></th>
+
+    <th>Profile<br /><div style="font-size:10px"> -headquarters city<br /> -executive director</div></th>
+
+    <th>Managing Partner(s)<br /><div style="font-size:10px"> -name<br /> -phone</div></th>
+
+  </tr>
+
+ {% for detail in lols.data %}
+
+ 	<tr>
+
+ 		<td>
+
+ 			<strong>{{ detail.companyName }}</strong><br />
+
+ 			{% if detail.publishAddress == "Y" %}
+
+ 				{{ detail.city }}, {{ detail.stateOrProvince }} {{ detail.postalCode }}
+
+ 			{% endif %}<br />
+
+ 			<a href="http://www.{{ detail.corporateWebsite }}" target="_blank">{{ detail.corporateWebsite }}</a><br/>
+
+ 		</td>
+
+ 		<td>
+
+      {% for fieldId, values in detail.deepData.items %}
+
+        {% if values.fieldLabel == "No. Attorneys LA County" %}
+
+          {% if values.year == "2017" %}
+
+          <strong>{{ values.value }}</strong> /
+
+          {% endif %}
+
+          {% if values.year == "2016" %}
+
+            {{ values.value }}
+
+          {% endif %}
+
+        {% endif %}
+
+      {% endfor %}  
+
+ 		</td>
+
+ 		<td>
+
+      {% for fieldId, values in detail.deepData.items %}
+
+        {% if values.fieldLabel == "No. Partners SFV" %}
+
+          {% if values.year == "2017" %}
+
+            {{ values.value }}
+
+          {% endif %}
+
+          {% if values.year == "2016" %}
+
+            {{ values.value }} /
+
+          {% endif %}
+
+        {% endif %}
+
+      {% endfor %}  
+
+ 		</td>
+
+ 		<td>
+
+ 			{% for fieldId, values in detail.deepData.items %}
+
+ 				{% if values.fieldLabel == "Other specialties" %}
+
+ 					{{ values.value }}
+
+ 				{% endif %}
+
+ 			{% endfor %}	
+
+ 		</td>
+
+ 		<td>
+
+      {{ detail.yearFounded }}<br />
+
+      {% for fieldId, values in detail.deepData.items %}
+
+        {% if values.fieldLabel == "No. Offices-LA" %}
+
+            {{ values.value }}
+
+          {% endif %} 
+
+        {% if values.fieldLabel == "No. Offices-CW" %}
+
+          {{ values.value }} /
+
+        {% endif %} 
+
+      {% endfor %}  
+
+ 		</td>
+
+    <td>
+
+      {{ detail.city }}<br />
+
+    </td>
+
+    <td>
+
+
+
+    </td>
+
+ 	</tr>
+
+ {% endfor %}
+
+</table>
+
+
+
+ {% endif %}
+
+{% endblock %}
+

@@ -1,0 +1,42 @@
+{% extends "base_generic.html" %}
+
+{% block title %}Subscribe or Purchase Content {% endblock %}
+{% block content %}
+  {% include "includes/paywall/subscribe_or_purchase.html" %}
+  {% comment %}
+  <h2>You must login or register to view this content. </h2>
+  <p class="callout">Access to the {{ site.domain }} website is available only to paid subscribers to the {{ site.name }}.</p>
+  <div>
+    <a href="/accounts/profile/edit/">Register Your Subscription</a>
+    <a href="https://www.pubsurvice.com/subnew.aspx?PC=OC&FC=UNITED+STATES">Subscribe Now</a>
+  </div>{% if ESP_ACCOUNT_NUMBER %}
+  {% ifequal ESP_ERROR INCORRECT_USER %}
+    Your print account number is being rejected.
+  {% endifequal %}
+  {% ifequal ESP_ERROR INCORRECT_PASSWORD %}
+    Your print account password is being rejected. It is typically the same as your zip code.
+  {% endifequal %}
+  {% ifequal ESP_ERROR SUBSCRIPTION_EXPIRED %}
+    Your print subscription has expired. Please contact subscriptions to renew.
+  {% endifequal %}
+  {% ifequal ESP_ERROR UNKNOWN_AUTH_BACKEND_ERROR %}
+    An unknown error has been encountered with your auth info - please contact Customer Service for further assistance.
+  {% endifequal %}
+  <br>
+  Your subscription is on file as #{{ ESP_ACCOUNT_NUMBER }}. However, your login is being rejected. Please check your subscription info in your <a href='{% url 'profiles_edit_profile' %}'>user profile</a>.
+{% else %}
+  You do not have subscription information on file with us. It may be set in your <a href='{% url 'profiles_edit_profile' %}'>user profile</a>.<br>
+  {% endif %}  Purchase just this article?<br>
+  <form method="POST" action="{{ PAYPAL_FORM_URL }}">
+    <input type="hidden" name="LOGIN" value="{{ PAYPAL_LOGIN_ID }}">
+    <input type="hidden" name="PARTNER" value="{{ PAYPAL_PARTNER_ID }}">
+    <input type="hidden" name="TYPE" value="S">
+    <input type="hidden" name="AMOUNT" value="{{ ITEM_COST }}">
+    <input type="hidden" name="CUSTID" value="{{ CUSTID }}">
+    <input type="hidden" name="COMMENT1" value="{{ COMMENT1 }}">
+    <input type="hidden" name="USER1" value="{{ USER1 }}">
+    <input type="submit" value="Buy">
+  </form>
+{% endcomment %}
+{% endblock content %}
+{% block bottom_left_ad %}{% endblock %}

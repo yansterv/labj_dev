@@ -1,0 +1,79 @@
+</div> <!--WRAPPER -->
+<footer class="footer all-100">
+	<div class="ink-grid">
+		<div class="column-group push-center footer-container">
+			<div class="module footer-col all-20 medium-100 small-100 tiny-100">
+				<ul class="unstyled">
+					<li class="list-title">Browse More</li>
+					<div class="sub-items">
+						<li><a href="/marketplace/">Classified</a></li>
+						<li><a href="/la-single-lists/">The Lists Archives</a></li>
+						<li><a href="/polls/">Polls Archive</a></li>
+						<li><a href="https://www.pubservice.com/backissue/subbi.aspx?PC=LA&PK=PWEB" target="_blank">Buy Back Issues</a></li>
+					</div>
+				</ul>
+			</div>
+			<div class="module footer-col all-20 medium-100 small-100 tiny-100">
+				<ul class="unstyled">
+					<li class="list-title">Learn More</li>
+					<div class="sub-items">
+						<li><a href="/about/">About Us</a></li>
+						<li><a href="/staff/">Staff</a></li>
+						<li><a href="/privacy-policy-la/">Privacy Policy</a></li>
+						<li><a href="/contact-labj/">Contact Us</a></li>
+						<li><a href="/faqs/">FAQs</a></li>
+						<li><a href="/newsstands/">Newsstand Locations</a></li>
+					</div>
+				</ul>
+			</div>
+			<div class="module footer-col all-20 medium-100 small-100 tiny-100">
+				<ul class="unstyled">
+					<li class="list-title">Services</li>
+					<div class="sub-items">
+						<li><a href="https://account.labusinessjournal.com/labj/subscribe.aspx?pc=LA">Subscription Center</a></li>
+						{% if user.is_authenticated %}{% else %}
+							<li><a href="/accounts/login/">Online Login/Register</a></li>
+						{% endif %}
+						<li><a href="/accounts/profile/edit/">Edit Your Subscription Account/Profile</a></li>
+						<li><a href="https://account.labusinessjournal.com/labj/subinfo.aspx?pc=LA&do=U">Change Delivery Address</a></li>
+						<li><a href="https://account.labusinessjournal.com/labj/subinfo.aspx?pc=LA&do=R">Renewals</a></li>
+						<li><a href="/advertise/">Advertise With Us</a></li>
+						<li><a href="http://eepurl.com/coa9Rv" target="_blank">Sign-Up for E-News Updates</a></li>
+						<li><a href="https://www.pubservice.com/subnew1.aspx?PC=LA&PK" target="_blank">LBSU Student</a></li>
+					</div>
+				</ul>
+			</div>
+			<div class="module footer-col all-20 medium-100 small-100 tiny-100">
+				<ul class="unstyled">
+					<li class="list-title">Tools</li>
+					<div class="sub-items">
+						<li><a href="/bizevents/">Events Calendar</a></li>
+						<li><a href="http://www.cbjonline.com/a2labj/2018_Editorial_Calendar" target="_blank">Editorial Calendar</a></li>
+					</div>
+				</ul>
+			</div>
+			<div class="module footer-col all-20 medium-100 small-100 tiny-100">
+				<ul class="unstyled">
+					<li class="list-title">Other Journals</li>
+					<div class="sub-items">
+						<li><a href="http://www.ocbj.com/" target="_blank">Orange County Business Journal</a></li>
+						<li><a href="http://www.sdbj.com/" target="_blank">San Diego Business Journal</a></li>
+						<li><a href="http://www.sfvbj.com/" target="_blank">San Fernando Valley Business Journal</a></li>
+					</div>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="footer-legal">
+		<div class="info">
+		&copy; {% now "Y" %} Los Angeles Business Journal
+		</div> 
+		
+		<div class="sep">•</div> 		<div class="info">
+			Phone 1-323-549-5225
+		</div> 
+		
+		<div class="info">
+		</div>
+	</div>
+</footer>

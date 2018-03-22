@@ -1,0 +1,44 @@
+{% extends "media/base_photos.html" %}
+{% block title %}Photo{% endblock %}
+{% block body_class %}{{ block.super }} photo_detail{% endblock %}
+{% block body_id %}photo_{{ object.id }}{% endblock %}{% block content_title %}
+<h1>Photo</h1>
+{% endblock %}{% block feed_link %}
+{% load content %}
+<link type="application/rss+xml" rel="alternate" href="/rss/comments/objects/{{ object|content_type_id }}/{{ object.pk }}/">
+{% endblock %}
+{% block content_title_wrapper %}{% endblock %}{% block content %}
+    {% load mogrify banned comments content %}    <img src="{% mogrify object.photo.url thumbnail "670" %}" alt="Photo detail" />    <div class="content_info">
+        <p class="byline">
+            {% if object.photographer or object.one_off_photographer %}
+            {% if object.photographer %}
+            Photo by <a href="{{ object.photographer.get_absolute_url }}">{{ object.photographer.first_name }} {{ object.photographer.last_name }}</a>
+            {% else %}
+            {{ object.one_off_photographer }}
+            {% endif %}
+            {% else %}
+            {{ object.credit }}
+            {% endif %}
+        </p>
+        <p class="datetime">{{ object.pub_date|date }}</p>
+    </div>    {% if object.caption %}<p class="caption">{{ object.caption|striptags|linebreaks }}</p>{% endif %}    <div class="share-container article-share-container">
+        <div class="fb">
+            <div class="fb-like" data-href="http://www.labusinessjournal.com{{ story.get_absolute_url }}" data-width="20" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
+        </div>
+        <div class="linked-twitter">    
+            <script src="//platform.linkedin.com/in.js" type="text/javascript"> lang: en_US</script>
+            <script type="IN/Share" data-url="http://www.labusinessjournal.com/{{ story.get_absolute_url }}"></script>
+            <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://www.labusinessjournal.com/{{ story.get_absolute_url }}">Tweet</a>
+            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+        </div>  
+    </div>    {% if object.get_story_list %}
+    <h2>Stories this photo appears in:</h2>
+    <div class="list">
+        {% for story in object.get_story_list %}
+        {% render_template_for story in "includes/lists" %}
+        {% endfor %}
+    </div>
+    {% endif %}
+    <!--
+    {% include "includes/comments.html" %}-->
+{% endblock %}

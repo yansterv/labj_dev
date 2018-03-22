@@ -1,0 +1,15 @@
+{% load mailfriend content %}
+
+<div class="item {% block item_class %}{% endblock %}" id="{% block item_id %}{{ object|content_type|slice:":1" }}{{ object.id }}{% endblock %}">
+  {% block item %}
+  <div class="article-list-item">
+    <div class="info">
+      <h4><a href="{{ object.get_absolute_url }}">{{ object }}</a></h4>
+      <ul class="footer">
+        <li><a href="{% mailfriend_link for object %}" rel="popup(600x650)">Share</a></li>
+        <li><a href="{{ object.get_absolute_url }}#comments">Discuss</a></li>
+      </ul>
+    </div>
+  </div>
+  {% endblock %}
+</div>

@@ -1,0 +1,31 @@
+{% extends "polls/base_polls.html" %}
+{% block title %}Polls{% endblock %}
+{% block body_class %}{{ block.super }} poll_archive{% endblock %}
+{% block content_title %}
+  <h2>Polls</h2>
+  {{ block.super }}
+{% endblock %}
+{% block content_search %}
+  <form action="{% url 'ellington_search_vertical' "polls.poll" %}" method="get" class="vertical_search_form" autocomplete="off">
+    <p>
+      <input type="text" name="q" value="" placeholder="Search polls">
+      <button type="submit">Search</button>
+    </p>
+  </form>
+{% endblock %}
+{% block content %}
+  {% load content %}  {% if poll_list %}
+  <div class="list poll_list">
+    {% for poll in poll_list %}
+      {% render_template_for poll in "includes/lists" %}
+    {% endfor %}
+  </div>
+  {% endif %}  {% if date_list %}
+  <h4 class="inline_list_title">Archive</h4>
+  <ul class="inline_list">
+    {% for year in date_list %}
+    <li><a href="/polls/{{ year|date:"Y" }}/">{{ year|date:"Y" }}</a></li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+{% endblock %}{% block sidebar %}{% endblock %}

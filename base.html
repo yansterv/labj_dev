@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="description" content="" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<title>{% block fulltitle %}{% block title %}{% endblock %} | {{ site.name }}{% endblock %}</title>
+	{% block extended_meta %}{% endblock %}
+
+	<link rel="shortcut icon" href="{{ STATIC_MEDIA_URL }}labj/v2/img/favicon.ico" />
+	<link href="{{ STATIC_MEDIA_URL }}labj/v2/css/app.css?v={% now "YmdHi" %}&amp;r=1" rel="stylesheet" />
+	<link href="https://fonts.googleapis.com/css?family=Cabin|Yrsa" rel="stylesheet">
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+	<link href="{{ STATIC_URL }}labj_dev/css/menu.css" rel="stylesheet" />
+	<link href="{{ STATIC_MEDIA_URL }}labj/v2/css/datajoe.css" rel="stylesheet" />
+
+	{% include "includes/v2/header.html" %}
+	{% block extended_scripts %}{% endblock %}
+	{% block feed_link %}{% endblock %}
+</head>
+
+{% load polls sectionfronts fragments %}
+
+<body class="ink-grid {% block body_class %}{% endblock body_class %}" id="{% block body_id %}{% endblock %}" style="background-imagurl('http://ocbj.media.clients.ellingtoncms.com/static/labj/images/Takeover-frame-4.png');">
+
+{% include "includes/v2/body-start.html" %}
+
+    <div class="page-wrap">
+        {% include "includes/v2/sections-menu.html" %}
+        <div class="all-100">
+            <div class="module push-center">
+                <div class="top-adzone align-center">
+                    <figure>
+                        <div class="ad-holder">
+                            <SCRIPT LANGUAGE=JavaScript>
+                                OAS_AD('Top');
+                            </SCRIPT>
+                        </div>
+                    </figure>
+                </div>
+            </div>
+        </div>
+
+		{% block content_wrapper %}
+
+        <div id="content">
+            <!--{% block subnav %}{% endblock subnav %}-->
+
+            {% block content_title %}{% endblock content_title %}
+
+            {% block content %}{% endblock content %}
+        </div>
+
+        {% endblock content_wrapper %}
+
+        <section class="centerwell wrap column-group">
+            <div class="all-100">
+                <div class="module push-center ">
+                    <div class="btm-adzone align-center">
+                        <figure>
+                            <div class="ad-holder">
+                                <SCRIPT LANGUAGE=JavaScript>
+                                    OAS_AD('Bottom');
+                                </SCRIPT>
+                            </div>
+                        </figure>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+{% include "includes/v2/footer.html" %}
+
+<script src="{{ STATIC_MEDIA_URL }}labj/v2/js/app.min.js?v={% now "YmdH" %}"></script>
+
+</body>
+</html>

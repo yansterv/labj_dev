@@ -1,0 +1,42 @@
+{% extends "news/base_documents.html" %}
+{% block title %}{{ object.title }}{% endblock %}
+{% block body_class %}{{ block.super }} document_detail{% endblock %}
+{% block body_id %}document_{{ object.id }}{% endblock %}
+{% block extended_meta %}{% include "includes/metadata.html" %}{% endblock %}
+{% block content_title %}
+  {% load rating_tags %}  <div class="vote_box">
+    {% vote_form for object %}
+    <small>Votes</small>
+  </div>  <h1>{{ object.title }}</h1>
+  {% if object.source %}<p class="source"><small>Source: {{ object.source }}</small></p>{% endif %}
+{% endblock %}
+{% block content %}<!-- FILE: document_detail.html -->  {% load mogrify comments banned content paywallutils %}  {% if object|subscriber:user %}
+    {% if object.get_file_extension == "pdf" %}
+      <iframe src="http://docs.google.com/gview?url={{ object.document.url }}&amp;embedded=true" style="width:575px; height:700px;" frameborder="0"></iframe>
+    {% else %}
+      {% if object.thumbnail %}
+        <img class="document_preview" src="{% mogrify object.thumbnail.url thumbnail "290" %}">
+      {% endif %}
+    {% endif %}    {{ object.description|linebreaks }}
+    {{ object.notes|linebreaks }}    <p class="download">
+      <a class="button {{ object.get_file_extension }}" href="{{ object.document.url }}">
+        Download <small>{{ object.get_file_extension|upper }}</small>
+      </a>
+    </p>
+  {% else %}
+    {% include "includes/paywall/subscribe_or_purchase.html" %}
+  {% endif %} 
+  {% comment %}
+    {{ object.description|linebreaks }}
+    {{ object.notes|linebreaks }}    <p class="download">
+      <a class="button {{ object.get_file_extension }}" href="{{ object.document.url }}">
+        Download <small>{{ object.get_file_extension|upper }}</small>
+      </a>
+    </p>
+    <div id="comments">
+      {% get_comment_list_banned for object as comment_list %}
+      {% include "comments/comment_list.html" %}
+      {% render_comment_form for object %}
+    </div>
+  {% endcomment %}
+{% endblock %}

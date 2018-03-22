@@ -1,0 +1,26 @@
+{% extends "polls/base_polls.html" %}
+{% block title %}{{ poll.question }}{% endblock %}
+{% block body_class %}{{ block.super }} poll_form{% endblock %}
+{% block body_id %}poll_{{ poll.id }}{% endblock %}  
+ 
+{% block content_title %} 
+  <h1>{{ poll.question }}</h1>
+{% endblock %}     
+{% block content %}
+  <form action="{{ poll.get_absolute_url }}results/" method="post">
+    {% if poll.has_multiple_votes %}
+      {% for choice in choice_list %}
+      <p class="choice"><input type="checkbox" name="choice{{ choice.id }}" id="poll_choice{{ choice.id }}"><label for="poll_choice{{ choice.id }}">{{ choice.choice }}</label></p>
+      {% endfor %}
+      <input type="hidden" name="vote" value="1">
+    {% else %}
+      {% for choice in choice_list %}
+      <p class="choice"><input type="radio" name="choice" id="poll_choice_{{ forloop.counter }}" value="{{ choice.id }}"> <label for="poll_choice_{{ forloop.counter }}">{{ choice.choice }}</label></p>
+      {% endfor %}
+    {% endif %}
+    <p class="submit">
+      <button type="submit">Vote</button>
+      <a class="alt_button" href="{{ poll.get_absolute_url }}results/">See results</a>
+    </p>
+  </form>
+{% endblock %}

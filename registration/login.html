@@ -1,0 +1,63 @@
+{% extends "registration/registration_base.html" %}{% block content %}
+    <div class="login-wrap">
+    <h2 class="login-header">Log in to enjoy full access to Los Angeles Business Journal news and content.</h2>
+    <div class="login-form-cta ink-flex">
+        <div class="login-form all-50 medium-100 small-100 tiny-100">
+            <div class="form-error-message">{{form.errors}}</div>
+            <form action="." method="post">
+                {% csrf_token %}
+                <div class="field">
+                    <div class="lbl">Username</div>
+                    <input type="text" name="username" value="" placeholder="Username" />
+                </div>
+                <div class="field">
+                    <div class="lbl">Password</div>
+                    <input type="password" name="password" value="" placeholder="Password" />
+                </div>
+                <div class="forgot-password"><a href="/accounts/password/reset/">Forgot your password?</a></div>
+                <button class="login">Log In</button>
+                <!--<input type="submit" name="name" value=""/>-->
+                <input type="hidden" name="next" value="{{ next }}" />
+            </form>
+        </div>
+        <div class="login-cta ink-flex all-50 medium-100 small-100 tiny-100">
+            <div class="digital-trial-info all-order-1 small-order-2 tiny-order-2">
+                <h3>Start your free digital trial.</h3>
+                <p>Digital trials include:</p>
+                <ul>
+                    <li>4 weeks of digital editions</li>
+                    <li>4 weeks of complete site access</li>
+                    <li>Free email alerts</li>
+                    <li>Unlimited access to digital archives</li>
+                </ul>
+                <a href="/accounts/register/" class="trial-link">Start Free Trial</a>
+            </div>            <div class="module-create-account all-order-2 small-order-1 tiny-order-1">
+                <h2>Don't have a login?</h2>
+                <p>Paid subscribers get unlimited digital access</p>
+                <a href="/accounts/register/">Create Your Digital Account</a>
+            </div>
+        </div>
+    </div>
+    <div class="login-upgrade">
+        <h2>Ready to Upgrade?</h2>
+        <div class="login-upgrade-box ink-flex">
+            <div class="upgrade-info all-60 medium-100 small-100 tiny-100">
+                <p>Get full access to Los Angeles Business Journal in print and online along with:</p>
+                <ul>
+                    <li>Weekly print delivery</li>
+                    <li>Special Edition publications</li>
+                    <li>Complete site access</li>
+                    <li>The Book of Lists</li>
+                    <li>Free email alerts</li>
+                    <li>Unlimited access to digital archives</li>
+                    <li>The LA 500 Special Edition</li>
+                </ul>
+            </div>
+            <div class="subscribe all-40 medium-100 small-100 tiny-100">
+                <div class="price">$129.95/year</div>
+                <a href="https://account.labusinessjournal.com/labj/subnew.aspx?pc=LA"><button class="subscribe">Subscribe</button></a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,23 @@
+{% extends "media/base_photos.html" %}
+{% block title %}Photos{% endblock %}
+{% block body_class %}{{ block.super }} latest_photos{% endblock %}
+{% block content_title %}
+<h1>Photos</h1>
+{{ block.super }}
+{% endblock %}{% block content %}<!--
+<form action="{% url 'ellington_search_vertical' "media.photo" %}" method="get" class="vertical_search_form" autocomplete="off">
+<p>
+    <input type="text" name="q" value="" placeholder="Search photos">
+    <button type="submit">Search</button>
+</p>
+</form>
+-->
+{% load content %}<div class="column-group gutters">
+    {% for photo in photo_list %}
+        <div class="all-25 small-50 tiny-100">
+            {% render_template_for photo in "includes/lists" %}
+        </div>
+    {% endfor %}
+</div>
+{% include "includes/pagination.html" %}
+{% endblock %}

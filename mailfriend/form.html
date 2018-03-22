@@ -1,0 +1,16 @@
+{% extends "mailfriend/base_mailfriend.html" %}
+{% block title %}Send "{{ obj|striptags }}" to a friend{% endblock %}
+{% block body_class %}{{ block.super }} mailfriend_form{% endblock %}
+{% block content_title %}
+<h2>Send "{{ obj|striptags }}" to a friend</h2>
+<h3>We will not store the e-mail addresses or give them to anybody. We value your privacy.</h3>
+{% endblock %}
+{% block content %}
+<form action="./" method="post" class="mailform_form">{% csrf_token %}
+    {{ form.as_p }}
+    <p class="submit">
+        <button type="submit">Send message</button>
+        <a class="alt_button" href="{{ obj.get_absolute_url }}">cancel</a>
+    </p>
+</form>
+{% endblock %}

@@ -1,0 +1,104 @@
+{% extends "news/base_news.html" %}
+   
+{% block title %}{{ story.headline }}{% endblock %}
+{% block body_class %}{{ block.super }} story_detail{% endblock %}
+{% block body_id %}story_{{ story.id }}{% endblock %}
+{% block extended_meta %}
+  {% load metadata %}
+  {% get_metadata for story as metadata %}
+  {% if metadata.keywords %}<meta name="keywords" content="{{ metadata.keywords.content }}">{% endif %}
+  <meta name="description" content="{% if metadata.description %}{{ metadata.description.content }}{% else %}{{ story.tease }}{% endif %}">
+{% endblock %}
+{% comment %}{% block extended_scripts %}
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $("#print_link").click(function()
+        {
+          window.print();
+        })
+    });
+  </script>
+{% endblock %}{% endcomment %}
+{% block content_title %}{% endblock %}
+{% block content %}
+  {% load banned comments content mailfriend mogrify paywallutils stories %}
+  {% if story|can_view:request.user %}
+    <div class="block">
+    {% block breadcrumbs %}
+    <!--breadcrumbs-->
+      <ul class="breadcrumbs">
+        <li><a href="/">home</a></li>
+        <li>news</li>
+      </ul>
+    {% endblock breadcrumbs %}
+      <div class="holder-block">
+        <ul>
+          <li><a href="javascript:window.print()" id="print_link">print</a></li>
+          <li><a href="{% mailfriend_link for story %}" rel="popup(620x650)">email</a></li>
+        </ul>
+      </div>
+    </div>
+    <h2>{{ story.headline }}</h2>
+    {% if story.subhead %}
+      <span class="info-post">{{ story.subhead }}</span>
+    {% endif %}
+    <span class="author">
+      {% if story.one_off_byline %}By {{ story.one_off_byline }}{% else %}{% if story.bylines.count %}By {% for author in story.bylines.all %}<a href="{{ author.get_absolute_url }}" class="name">{{ author }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}{% endif %}{% endif %}
+    </span>
+    <span class="published">
+      {% if not story.update_date %}{{ story.pub_date|date:"l, F j, Y" }}{% else %}Originally published {{ story.pub_date|date }} at {{ story.pub_date|time }}, updated {{ story.update_date|date }} at {{ story.update_date|time }}{% endif %}
+    </span>
+    <!--article-->
+    <div class="article">
+      {% if story.lead_photo %}
+        <div class="image-holder">
+          {% with story.lead_photo as photo %}
+            {% ifequal photo.photo_type.slug "illustrations" %}
+              <img src="{% mogrify story.lead_photo.cropped.url thumbnail "300" %}" alt="{{ photo.caption }}">
+            {% else %}
+              <a href="{{ photo.get_absolute_url }}"><img src="{% mogrify story.lead_photo.cropped.url thumbnail "300" %}" alt="{{ photo.caption }}"></a>
+            {% endifequal %}
+            {% if photo.photographer_id %}
+              Photo by <a href="{{ photo.photographer.get_absolute_url }}">{{ photo.photographer.first_name }} {{ photo.photographer.last_name }}</a>
+            {% else %}
+              {{ photo.one_off_photographer }}
+            {% endif %}
+            <p class="sub">
+              {% if photo.original.caption %}{{ photo.original.caption }}{% endif %}
+            </p>
+          {% endwith %}
+          <span class="sub">
+            {% if photo.photographer or photo.one_off_photographer %}>
+              {% if photo.photographer_id %}
+                <em>Photo by <a href="{{ photo.photographer.get_absolute_url }}">{{ photo.photographer.first_name }} {{ photo.photographer.last_name }}</a></em>
+            {% else %}
+                <em>{{ photo.one_off_photographer }}</em>
+              {% endif %}
+            {% endif %} 
+          </span>
+        </div>
+      {% endif %}
+      {% markupstory story framing %}
+    </div>
+  {% else %}
+    {% include "includes/paywall/subscribe_or_purchase.html" %}
+  {% endif %}
+{% endblock %}
+{% block poll %}{% endblock poll %}
+{% block most_popular_box%}
+  {% load site_mlt %}
+  {% more_like_this story as recommended_list for "news.story" limit 8 %}
+  {% if recommended_list %}
+    <!--info-box-->
+    <div class="info-box">
+      <div class="title">
+        <h2>you may also like</h2>
+      </div>
+      <ul class="list">
+        {% for story in recommended_list %}
+          <li><a href="{{ story.object.get_absolute_url }}">{{ story.object.headline }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+{% endblock most_popular_box %}

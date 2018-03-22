@@ -1,0 +1,4 @@
+{% extends "includes/v2/layout-two-col.html" %}{% load anonymity %}
+{% block title %}{% firstof person.get_full_name user.get_full_name %}{% endblock %}
+{% block body_class %}users{% endblock %}
+{% block sidebar_ad %}{% endblock %}

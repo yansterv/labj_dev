@@ -1,0 +1,41 @@
+{% block page_title %}{{ site.name }} Daily E-mail Edition{% endblock %}
+
+
+
+{% for story in story_list %}
+
+  <a href="http://{{ site.domain }}{{ story.get_absolute_url }}">{{ story.headline }}</a>
+
+  {% if story.subhead %}{{ story.subhead }}{% endif %}
+
+  {{ story.pub_date|date:"l, N j, Y" }}
+
+
+
+  {% if story.one_off_byline %}
+
+    {{ story.one_off_byline }}
+
+  {% else %} 
+
+    {% if story.bylines.count %}
+
+      By {% for byline in story.bylines.all %}<a href="{{ byline.get_absolute_url }}">{{ byline.first_name }} {{ byline.last_name }}</a>{% if byline.email %} {% if byline.is_active %}(<a href="/staff/{{ byline.slug }}/contact/" class="contactlink">Contact</a>){% endif %}{% endif %}{% if not forloop.last %}, {% endif %}{% endfor %}
+
+    {% endif %}
+
+  {% endif %}
+
+
+
+  {% if story.tease %}{{ story.tease }}{% endif %} <a href="http://{{ site.domain }}/{{ story.get_absolute_url }}">Read story</a>.
+
+{% endfor %}
+
+
+
+<p> Los Angeles Business Journal | 5700 Wilshire Blvd. | Los Angeles, CA 90036 | (323) 549-5225 | Copyright © 2010. All Rights Reserved. </p>
+
+<br><br>You're receiving this e-mail because you subscribed</a> to a {{ site.name }} e-mail edition. 
+
+<br> <a href="mailto:circulation1@labusinessjournal.com?SUBJECT=Unsubscribe From {% block footer_title %}{% if section.title %}{{ section.title }}{% else %}Email{% endif %}{% endblock %}">Unsubscribe</a> from this e-Mail Edition.</font>

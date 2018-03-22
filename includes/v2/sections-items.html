@@ -1,0 +1,26 @@
+<!--<li><a href="/">Home</a></li>
+<li><a href="/lalists/">Lists</a></li>
+<li><a href="/supplements/">Custom Content</a></li>
+<li><a href="/news/la-finance/">Finance</a></li>
+<li><a href="/news/la-healthcare/">Health Care</a></li>
+<li><a href="/news/la-manufacturing/">Manufacturing</a></li>
+<li><a href="/news/la-real-estate/">Real Estate</a></li>
+<li><a href="/news/la-services/">Services</a></li>
+<li><a href="/news/la-technology/">Technology</a></li>
+<li><a href="/news/la-government/">Government</a></li>
+<li><a href="/news/la-travel-leisure/">Travel/Leisure</a></li>
+<li><a href="/bizevents/">Events</a></li>
+<li><a href="/people-on-the-move/">People on the Move</a></li>-->
+{% load navigation hierarchy %}
+      {% get_navigation_by_name "Top Nav" as top_nav %}
+        {% for child in top_nav.get_children %}
+          <li><a href="{{ child.link_url }}">{{ child.label }}</a>
+              {% if not child.is_leaf_node  %}
+              <ul>
+                {% recursetree child %}
+                  <li><a href="{{ node.link_url }}">{{ node.label }}</a></li>
+                {% endrecursetree %}
+              </ul>
+              {% endif %}
+          </li>
+        {% endfor %}

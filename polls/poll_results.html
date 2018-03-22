@@ -1,0 +1,54 @@
+{% extends "includes/v2/layout-two-col.html" %}{% block title %}{{ poll.question }}{% endblock %}
+{% block body_class %}{{ block.super }} poll_results polls{% endblock %}
+{% block body_id %}poll_{{ poll.id }}{% endblock %}{% block extended_scripts %}
+  <script type="text/javascript">
+    window.onload = function(){
+      jQuery('div.poll_results .bar').fadeTo(400, 1).each(function(e) {
+        bar = jQuery(this);
+        bar.css({width: '0'});
+        bar.fadeTo(e*100, 1).animate({width: bar.attr('title')+'%'});
+      });
+    }
+  </script>
+{% endblock %}
+ {% block content_title %} 
+  <h1>{{ poll.question }}</h1>
+{% endblock %}
+{% block content %}
+  {% load polls banned comments content %}{#  {% render_template_for poll in "includes/tools" %}#}  {% if vote_attempted %}
+    {% if error_message %}
+      <p class="error">{{ error_message }}</p>
+    {% else %}
+      <p>Thanks for your vote.</p>
+    {% endif %}
+  {% endif %}  <div class="poll_results">
+    {% for choice in choice_list %}
+    <div class="choice">
+      <h4 class="choice_title">{{ choice.choice|striptags }}
+        <span class="total">{{ choice.votes }} vote{{ choice.votes|pluralize }}</span>
+      </h4>
+      <span class="bar" title="{% widthratio choice.votes poll.get_total_votes 100 %}" style="width:{% widthratio choice.votes poll.get_total_votes 100 %}%">
+        <span class="percent">{% votepercent choice poll %}%</span>
+      </span>
+    </div>
+    {% endfor %}
+  </div>  <p>{{ poll.get_total_votes }} total vote{{ poll.get_total_votes|pluralize }}</p>  {% if not vote_attempted %}
+    {% if not poll.is_closed %}
+      <p class="vote_link"><a href="{{ poll.get_absolute_url }}" class="button">Vote in this poll.</a></p>
+    {% endif %}
+  {% endif %}  {% with poll as object %}
+    {% include "includes/comments.html" %}
+  {% endwith %}
+{% endblock %}
+{% block sidebar_modules %}
+{% load content %}
+{% get_latest_content for polls.poll as poll_list limit 1 %}<div class="module latest-polls">
+  <br />
+  <h2><a href="/polls/">Latest polls</a></h2>
+  <ul>
+    {% for poll in poll_list %}
+    <li><a href="{{ poll.get_absolute_url }}">{{ poll.question }}
+      <small>Published {{ poll.pub_date|date }}</small></a></li>    {% endfor %}
+  </ul>  <a href="/polls/">More polls &gt;&gt;</a>
+</div>
+{% endblock %}

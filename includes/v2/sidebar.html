@@ -1,0 +1,52 @@
+<aside class="sidebar default-sidebar all-35 medium-100 small-100 tiny-100">
+        <div class="column-group modules all-100 share-module">
+            {% include "includes/v2/module-share.html" %}
+        </div>
+        <div class="column-group adzones">
+          <div class="module half-bottom-space">
+              <div class="ad-holder">
+                <SCRIPT LANGUAGE=JavaScript>
+                    OAS_AD('Middle');
+                </SCRIPT>
+              </div>
+          </div>
+          <div class="module half-bottom-space">
+            <div class="module-content imageholder">
+              <div class="ad-holder">
+                  <SCRIPT LANGUAGE=JavaScript>
+                      OAS_AD('Middle1');
+                  </SCRIPT>
+              </div>
+            </div>
+          </div>
+          <div class="module half-bottom-space">
+            <div class="module-content imageholder">
+              <div class="ad-holder">
+                <SCRIPT LANGUAGE=JavaScript>
+                    OAS_AD('Position1');
+                </SCRIPT>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="column-group modules">
+          % load site_mlt %
+          % more_like_this story as recommended_list for "news.story" limit 8 %
+          % if recommended_list %
+          <div class="module all-100 column-group">
+            <div class="column all-100 push-middle">
+              <div class="module-contents align-center">
+                <h2 class="related title">You May Also Like</h2>
+                <ul class="align-left">
+                  % for story in recommended_list %
+                  <li><a href=" story.object.get_absolute_url "> story.object.headline </a></li>
+                  % endfor %
+                </ul>
+              </div>
+            </div>
+          </div>
+          % endif %
+            this is where recommended list should reside
+        </div>
+        {% include "includes/v2/module-broadcast.html" %}
+</aside>
