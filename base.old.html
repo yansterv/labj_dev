@@ -22,59 +22,33 @@
 	{% block skin_style %}{% endblock %}
 		{% include "includes/scripts.html" %}
 
-  {% block extended_scripts %}
+		{% block extended_scripts %}
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$('#pub-chooser').change(function() {
+					window.location = $('#cabj_nav').val();
+				});
+			});
+		</script>
 
-    <script type="text/javascript">
-
-      $(document).ready(function() {
-
-        $('#pub-chooser').change(function() {
-
-            window.location = $('#cabj_nav').val();
-
-        });
-
-      });
-
-    </script>
-
-    <script type="text/javascript">
-
-      <!--
-
-        //configuration
-
-      OAS_url = 'http://oascentral.{{ site.domain }}/RealMedia/ads/';
-
-        //OAS_sitepage = window.location.hostname + window.location.pathname;
-
-        OAS_sitepage = '{% if 'labusinessjournal' in request.META.SERVER_NAME %}labusinessjournal{% endif %}{% if 'ocbj' in request.META.SERVER_NAME %}ocbj{% endif %}{% if 'sdbj' in request.META.SERVER_NAME %}sdbj{% endif %}{% if 'sfvbj' in request.META.SERVER_NAME %}sfvbj{% endif %}.www.clients.ellingtoncms.com/{% if 'labusinessjournal' in request.META.SERVER_NAME %}la{% endif %}{% if 'ocbj' in request.META.SERVER_NAME %}oc{% endif %}{% if 'sdbj' in request.META.SERVER_NAME %}sd{% endif %}{% if 'sfvbj' in request.META.SERVER_NAME %}sfv{% endif %}_homepage';
-
-        OAS_listpos = 'Top,TopRight,Middle,Middle1,Bottom,x92';
-
-        OAS_query = '';
-
-        OAS_target = '_top';
-
-        //end of configuration
-
-        OAS_version = 10;
-
-        OAS_rn = '001234567890'; OAS_rns = '1234567890';
-
-        OAS_rn = new String (Math.random()); OAS_rns = OAS_rn.substring (2, 11);
-
-        function OAS_NORMAL(pos) {
-
-          document.write('<A HREF="' + OAS_url + 'click_nx.ads/' + OAS_sitepage + '/1' + OAS_rns + '@' + OAS_listpos + '!' + pos + '?' + OAS_query + '" TARGET=' + OAS_target + '>');
-
-          document.write('<IMG SRC="' + OAS_url + 'adstream_nx.ads/' + OAS_sitepage + '/1' + OAS_rns + '@' + OAS_listpos + '!' + pos + '?' + OAS_query + '" BORDER=0></A>');
-
-        }
-
-      //-->
-
-    </script>
+		<script type="text/javascript">
+		<!-- //configuration
+		OAS_url = 'http://oascentral.{{ site.domain }}/RealMedia/ads/';
+		//OAS_sitepage = window.location.hostname + window.location.pathname;
+		OAS_sitepage = '{% if 'labusinessjournal' in request.META.SERVER_NAME %}labusinessjournal{% endif %}{% if 'ocbj' in request.META.SERVER_NAME %}ocbj{% endif %}{% if 'sdbj' in request.META.SERVER_NAME %}sdbj{% endif %}{% if 'sfvbj' in request.META.SERVER_NAME %}sfvbj{% endif %}.www.clients.ellingtoncms.com/{% if 'labusinessjournal' in request.META.SERVER_NAME %}la{% endif %}{% if 'ocbj' in request.META.SERVER_NAME %}oc{% endif %}{% if 'sdbj' in request.META.SERVER_NAME %}sd{% endif %}{% if 'sfvbj' in request.META.SERVER_NAME %}sfv{% endif %}_homepage';
+		OAS_listpos = 'Top,TopRight,Middle,Middle1,Bottom,x92';
+		OAS_query = '';
+		OAS_target = '_top';
+		//end of configuration
+		OAS_version = 10;
+		OAS_rn = '001234567890'; OAS_rns = '1234567890';
+		OAS_rn = new String (Math.random()); OAS_rns = OAS_rn.substring (2, 11);
+		function OAS_NORMAL(pos) {
+			document.write('<A HREF="' + OAS_url + 'click_nx.ads/' + OAS_sitepage + '/1' + OAS_rns + '@' + OAS_listpos + '!' + pos + '?' + OAS_query + '" TARGET=' + OAS_target + '>');
+			document.write('<IMG SRC="' + OAS_url + 'adstream_nx.ads/' + OAS_sitepage + '/1' + OAS_rns + '@' + OAS_listpos + '!' + pos + '?' + OAS_query + '" BORDER=0></A>');
+		}
+		//-->
+		</script>
 
     <script type="text/javascript">
 
